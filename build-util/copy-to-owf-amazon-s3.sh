@@ -1,0 +1,43 @@
+#!/bin/sh
+(set -o igncr) 2>/dev/null && set -o igncr; # this comment is required
+# The above line ensures that the script can be run on Cygwin/Linux even with Windows CRNL
+#
+# Copy the site/* contents to the learn.openwaterfoundation.org website
+# - replace all the files on the web with local files
+# - must specify Amazon profile as argument to the script
+
+# Set --dryrun to test before actually doing
+dryrun=""
+#dryrun="--dryrun"
+s3Folder="s3://learn.openwaterfoundation.org/owf-learn-aws"
+
+# Make sure that this is being run from the build-util folder
+pwd=`pwd`
+dirname=`basename ${pwd}`
+if [ ! ${dirname} = "build-util" ]
+        then
+        echo "Must run from build-util folder"
+        exit 1
+fi
+
+if [ "$1" == "" ]
+	then
+	echo ""
+	echo "Usage:  $0 AmazonConfigProfile"
+	echo ""
+	echo "Copy the site files to the Amazon S3 static website folder:  $s3Folder"
+	echo ""
+	exit 0
+fi
+
+awsProfile="$1"
+
+# First build the site so that the "site" folder contains current content.
+# - "mkdocs serve" does not do this
+
+cd ../mkdocs-project; mkdocs build --clean; cd ../build-util
+
+# Now sync the local files up to Amazon S3
+aws s3 sync ../mkdocs-project/site ${s3Folder} ${dryrun} --delete --profile "$awsProfile"
+
+exit $?
