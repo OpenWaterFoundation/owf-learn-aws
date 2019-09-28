@@ -1,4 +1,4 @@
-# Learn AWS / Resources #
+# AWS / Resources #
 
 The following are useful resources.
 

@@ -6,7 +6,7 @@ This documentation has been written based on experience using AWS at the Open Wa
 
 ## About the Open Water Foundation ##
 
-The [Open Water Foundation](http://openwaterfoundation.org) is a 501(c)3 nonprofit social enterprise that focuses
+The [Open Water Foundation](http://openwaterfoundation.org) is a nonprofit social enterprise that focuses
 on developing and supporting open source software for water resources, so that organizations can make better decisions about water.
 OWF also works to advance open data tools and implementation.
 OWF has created this documentation to educate its staff, collaborators, and clients that use AWS.
@@ -36,5 +36,5 @@ The source files for this documentation are maintained in a GitHub repository:  
 
 ## Release Notes ##
 
-This documentation was last updated 2018-09-11.
-See the [Release Notes in the GitHub Project](https://github.com/OpenWaterFoundation/owf-learn-aws#release-notes).
+See the [Release Notes in the GitHub Project](https://github.com/OpenWaterFoundation/owf-learn-aws#release-notes)
+and [GitHub repository issues](https://github.com/OpenWaterFoundation/owf-learn-aws/issues).
