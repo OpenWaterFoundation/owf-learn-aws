@@ -1,4 +1,11 @@
-# Learn AWS / Overview
+# AWS / Overview
+
+* [Introduction](#introduction)
+* [Alternatives to AWS](#alternatives-to-aws)
+
+-------------
+
+## Introduction ##
 
 [Amazon Web Services (AWS)](https://aws.amazon.com/)
 provides cloud-based services such as file storage, websites, virtual machines, and other technology services.
@@ -9,6 +16,8 @@ This documentation will be expanded over time with working examples.
 The Open Water Foundation recommends using AWS for the following purposes:
 
 * Cloud storage - the S3 service provides cost-effective cloud storage for static websites, archives, and systems.
+For example, the content on the
+[learn.openwaterfoundatino.org](http://learn.openwaterfoundation.org) website is stored on an S3 bucket.
 
 ## Alternatives to AWS
 

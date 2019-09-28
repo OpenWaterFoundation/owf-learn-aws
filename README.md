@@ -11,6 +11,8 @@ See the deployed [OWF / Learn AWS](http://learn.openwaterfoundation.org/owf-lear
 The repository contains the following:
 
 ```text
+0-notes/              Local notes that will not be committed to repo,
+                      useful to indicate local environment for Git.
 .github/              Files specific to GitHub such as issue template.
 .gitattributes        Typical Git configuration file.
 .gitignore            Typical Git configuration file.
@@ -25,8 +27,8 @@ mkdocs-project/       Typical MkDocs project for this documentation.
 
 ## Development Environment ##
 
-The development environment for contributing to this project requires installation of Python, MkDocs, and Material MkDocs theme.
-Python 2 and 3 have been used for development.
+The development environment for contributing to this project requires installation of Python,
+MkDocs, and Material MkDocs theme.  Python 3 has been used for development.
 
 ## Editing and Viewing Content ##
 
