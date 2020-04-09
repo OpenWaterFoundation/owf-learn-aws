@@ -36,5 +36,4 @@ The source files for this documentation are maintained in a GitHub repository:  
 
 ## Release Notes ##
 
-See the [Release Notes in the GitHub Project](https://github.com/OpenWaterFoundation/owf-learn-aws#release-notes)
-and [GitHub repository issues](https://github.com/OpenWaterFoundation/owf-learn-aws/issues).
+See the [GitHub repository issues](https://github.com/OpenWaterFoundation/owf-learn-aws/issues).

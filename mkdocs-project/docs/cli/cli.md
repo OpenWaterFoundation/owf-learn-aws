@@ -1,13 +1,19 @@
 # AWS / CLI #
 
+This documentation describes how to install and use the AWS command line interface (CLI).
+
+* [Introduction](#introduction)
+* [Install Python `awscli`](#install-python-awscli)
+* [User Authentication](#user-authentication)
+* [Run `aws`](#run-aws)
+
+------------
+
+## Introduction ##
+
 [The AWS Command Line Interface (CLI)](https://aws.amazon.com/cli/) is a Python tool to manage AWS services on the command line.
 CLI can be run from Windows command line, Cywin, Git Bash, and Linux shell,
 and allows AWS actions to be scripted and automated.
-
-* [Install Python `awscli`](#install-python-awscli)
-* [Run `aws`](#run-aws)
-
--------
 
 ## Install Python `awscli` ##
 
@@ -43,17 +49,27 @@ for example:
 py -3.7 -m pip install awscli
 ```
 
+## User Authentication ##
+
+The `aws` program must be configured to allow the user to access AWS.
+
+* See:  [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+
+The above results in AWS configuration files being saved in the user's files in a `.aws` folder.
+A profile name will also have been selected.
+
+The profile name is then used with `aws` script with the `--profile profile-name` argument.
+
 ## Run `aws` ##
 
 The `aws` script is run to interact with web services.
 On Linux the script is typically installed in a location that is visible in the `PATH`.
-Therefore, run `aws` from the command line as per the AWS CLI documentation
-for specific services.
+Therefore, run `aws` from the command line as per the AWS CLI documentation for specific services.
 
 ### Git Bash on Windows ###
 
 When using Git Bash on Windows,
-the script is installed in the `Scripts` folder under the Python installation
+the `aws` script is installed in the `Scripts` folder under the Python installation
 and may not be in the `PATH`, in particular if the `py` program installed on Windows is used
 to run Python from Git Bash.
 The following shell script illustrates how to determine the location of the script without
