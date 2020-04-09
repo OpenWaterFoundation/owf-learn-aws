@@ -11,8 +11,6 @@ See the deployed [OWF / Learn AWS](http://learn.openwaterfoundation.org/owf-lear
 The repository contains the following:
 
 ```text
-0-notes/              Local notes that will not be committed to repo,
-                      useful to indicate local environment for Git.
 .github/              Files specific to GitHub such as issue template.
 .gitattributes        Typical Git configuration file.
 .gitignore            Typical Git configuration file.
@@ -22,7 +20,8 @@ mkdocs-project/       Typical MkDocs project for this documentation.
   mkdocs.yml          MkDocs configuration file for website.
   docs/               Folder containing source Markdown and other files for website.
   site/               Folder created by MkDocs containing the static website - ignored using .gitignore.
-
+z-local-notes/        Local notes that will not be committed to repo,
+                      useful to indicate local environment for Git for each developer.
 ```
 
 ## Development Environment ##
@@ -53,7 +52,3 @@ Contribute to the documentation as follows:
 ## Maintainers ##
 
 This repository is maintained by the [Open Water Foundation](http://openwaterfoundation.org/).
-
-## Contributors ##
-
-Steve Malers, Open Water Foundation (@smalers)

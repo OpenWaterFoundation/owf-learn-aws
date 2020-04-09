@@ -24,7 +24,7 @@ For example, the content on the
 Alternatives to AWS should be considered where AWS does not satisfy requirements or another solution is preferred by an organization.
 It is also possible to mix and match cloud services, although a price is incurred.
 Many services have cost based on the level of service used and therefore can scale as needed.
-Alternatives to AWS include:
+Primary alternatives to AWS include:
 
 * [Google Cloud Platform](https://cloud.google.com/)
 * [Microsoft Azure](https://azure.microsoft.com/en-us/)

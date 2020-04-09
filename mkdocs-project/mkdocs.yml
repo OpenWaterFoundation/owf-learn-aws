@@ -6,10 +6,14 @@ site_name: Learn / AWS
 nav:
 - Home: index.md
 - Overview: overview.md
-- 'AWS Command Line: CLI':  cli.md
-- 'Users and Roles: IAM': iam.md
-- 'Storage: S3': s3.md
-- 'Troubleshooting': troubleshooting.md
+- 'AWS Account':  aws-account/aws-account.md
+- 'AWS Login':  aws-login/aws-login.md
+- 'AWS Command Line: CLI':  cli/cli.md
+- 'Users and Roles: IAM': iam/iam.md
+- 'Storage: S3': s3/s3.md
+- 'Content Delivery: CloudFront': cloudfront/cloudfront.md
+- 'Computing: EC2': ec2/ec2.md
+- 'Troubleshooting': troubleshooting/troubleshooting.md
 - 'Resources': resources.md
 # ------- configuration properties ---------------
 copyright:  Copyright Open Water Foundation
