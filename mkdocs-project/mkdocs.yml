@@ -11,7 +11,9 @@ nav:
 - 'AWS Command Line: CLI':  cli/cli.md
 - 'Users and Roles: IAM': iam/iam.md
 - 'Storage: S3': s3/s3.md
-- 'Content Delivery: CloudFront': cloudfront/cloudfront.md
+- 'Content Delivery:':
+  - 'CloudFront': cloudfront/cloudfront.md
+  - 'CloudFront + Lambda Function':  cloudfront/auth-lambda.md
 - 'Computing: EC2': ec2/ec2.md
 - 'Troubleshooting': troubleshooting/troubleshooting.md
 - 'Resources': resources.md
