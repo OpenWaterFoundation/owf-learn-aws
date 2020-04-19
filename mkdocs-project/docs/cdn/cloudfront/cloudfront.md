@@ -130,9 +130,6 @@ If necessary, use software such as [`Gimp`](https://www.gimp.org/) to convert an
 
 This section was updated on 2020-04-19.
 
-**Note that the example in this section is not currently working.
-See the [Attempt 2 - Works](#attempt-2-works) section for a working example.**
-
 The main CloudFront configuration settings allows setting the ***Default Root Object*** to `index.html`.
 However, this setting does not apply to other folders.
 This is different from an S3 bucket that is configured as a public static website.
@@ -165,14 +162,16 @@ The following URL patterns don't work:
 
 See the following solution, which involves defining a lambda function:
 
-* [Implementing Default Directory Indexes in Amazon S3-backed Amazon CloudFront Origins Using Lambada@Edge](https://aws.amazon.com/blogs/compute/implementing-default-directory-indexes-in-amazon-s3-backed-amazon-cloudfront-origins-using-lambdaedge/)
-* [Stack Overflow "Serve index file instead of download prompt"](https://stackoverflow.com/questions/54164128/serve-index-file-instead-of-download-prompt)
+* [Stack Overflow "Serve index file instead of download prompt"](https://stackoverflow.com/questions/54164128/serve-index-file-instead-of-download-prompt) - **this worked and is used for both examples below**
+* [Implementing Default Directory Indexes in Amazon S3-backed Amazon CloudFront Origins Using Lambada@Edge](https://aws.amazon.com/blogs/compute/implementing-default-directory-indexes-in-amazon-s3-backed-amazon-cloudfront-origins-using-lambdaedge/) - **this did not work, and resulted in download of empty files for folders ending in `/`** (for example Chrome created files named `download *` and Microsoft Edge created files named `test-folder *`)
 
 The solution defines a trigger on the CloudFront distribution
 to detect when a page is accessed with URL ending in `/`, and modifies the URL to append `index.html`.
 
+#### Example 1 for CloudFront Website Authenticated with Lambda Function ####
+
 For this example, assume that another Lambda function has already been defined,
-for example to support authentication (see the example for
+such as the example to support authentication (see the example for
 [Authenticated Website using a private S3 bucket and Lambda Function](authenticated-website-using-a-private-s3-bucket-and-lambda-function)).
 Define the Lambda function in the same region and use the existing execution role.
 Before completing the following, review the details of the previous function that was defined and determine the execution role.
@@ -194,26 +193,76 @@ taken from the above article:
 
 ```
 'use strict';
+
+// combination origin-request, origin-response trigger to emulate the S3
+// website hosting index document functionality, while using the REST
+// endpoint for the bucket
+
+// https://stackoverflow.com/a/54263794/1695906
+
+const INDEX_DOCUMENT = 'index.html'; // do not prepend a slash to this value
+
+const HTTP_REDIRECT_CODE = '302'; // or use 301 or another code if desired
+const HTTP_REDIRECT_MESSAGE = 'Found'; 
+
 exports.handler = (event, context, callback) => {
-    
-    // Extract the request from the CloudFront event that is sent to Lambda@Edge 
-    var request = event.Records[0].cf.request;
+    const cf = event.Records[0].cf;
 
-    // Extract the URI from the request
-    var olduri = request.uri;
+    if(cf.config.eventType === 'origin-request')
+    {
+        // if path ends with '/' then append INDEX_DOCUMENT before sending to S3
+        if(cf.request.uri.endsWith('/'))
+        {
+            cf.request.uri = cf.request.uri + INDEX_DOCUMENT;
+        }
+        // return control to CloudFront, to send request to S3, whether or not
+        // we modified it; if we did, the modified URI will be requested.
+        return callback(null, cf.request);
+    }
+    else if(cf.config.eventType === 'origin-response')
+    {
+        // is the response 403 or 404?  If not, we will return it unchanged.
+        if(cf.response.status.match(/^40[34]$/))
+        {
+            // it's an error.
 
-    // Match any '/' that occurs at the end of a URI. Replace it with a default index
-    var newuri = olduri.replace(/\/$/, '\/index.html');
-    
-    // Log the URI as received by CloudFront and the new URI to be used to fetch from origin
-    console.log("Old URI: " + olduri);
-    console.log("New URI: " + newuri);
-    
-    // Replace the received URI with the URI that includes the index page
-    request.uri = newuri;
-    
-    // Return to CloudFront
-    return callback(null, request);
+            // we're handling a response, but Lambda@Edge can still see the attributes of the request that generated this response; so, we
+            // check whether this is a page that should be redirected with a trailing slash appended.  If it doesn't look like an index
+            // document request, already, and it doesn't end in a slash, and doesn't look like a filename with an extension... we'll try that.
+
+            // This is essentially what the S3 web site endpoint does if you hit a nonexistent key, so that the browser requests
+            // the index with the correct relative path, except that S3 checks whether it will actually work.  We are using heuristics,
+            // rather than checking the bucket, but checking is an alternative.
+
+            if(!cf.request.uri.endsWith('/' + INDEX_DOCUMENT) && // not a failed request for an index document
+               !cf.request.uri.endsWith('/') && // unlikely, unless this code is modified to pass other things through on the request side
+               !cf.request.uri.match(/[^\/]+\.[^\/]+$/)) // doesn't look like a filename  with an extension
+            {
+                // add the original error to the response headers, for reference/troubleshooting
+                cf.response.headers['x-redirect-reason'] = [{ key: 'X-Redirect-Reason', value: cf.response.status + ' ' + cf.response.statusDescription }];
+                // set the redirect code
+                cf.response.status = HTTP_REDIRECT_CODE;
+                cf.response.statusDescription = HTTP_REDIRECT_MESSAGE;
+                // set the Location header with the modified URI
+                // just append the '/', not the "index.html" -- the next request will trigger
+                // this function again, and it will be added without appearing in the
+                // browser's address bar.
+                cf.response.headers['location'] = [{ key: 'Location', value: cf.request.uri + '/' }];
+                // not strictly necessary, since browsers don't display it, but remove the response body with the S3 error XML in it
+                cf.response.body = '';
+            }
+        }
+
+        // return control to CloudFront, with either the original response, or
+        // the modified response, if we modified it.
+
+        return callback(null, cf.response);
+
+    }
+    else // this is not intended as a viewer-side trigger.  Throw an exception, visible only in the Lambda CloudWatch logs and a 502 to the browser.
+    {
+        return callback(`Lambda function is incorrectly configured; triggered on '${cf.config.eventType}' but expected 'origin-request' or 'origin-response'`);
+    }
 
 };
 ```
@@ -253,14 +302,20 @@ indicating that a ***CloudFront*** trigger has been added.
 Lambda Function after Trigger is Created (<a href="../images/cloudfront-append-index-4.png">see full-size image</a>)
 </p>**
 
-The following URL patterns now displays the `index.html` file as expected:
+Add another trigger similarly, but specify the ***Event type*** as ***Origin Response***.
+
+The following URL patterns then display the `index.html` file content as expected.
+The third case may be an issue if files without extensions are served, but hopefully this can be avoided.
 
 ```
 * `/test-folder/`
 * `/test-folder/index.html`
+* `/test-folder`
 ```
 
-However, accessing the URL ending in `/` is behaving as follows.
+**The following behavior was seen before the proper Lambda function code was determined.
+If the following symptoms occur, then evaluate whether the Lambda function code is correct,
+perhaps by trying something like Example 2 below.**
 
 For `/test-folder/` with Chrome, an `AccessDenied` error is shown and the browser downloads
 an empty file named `download` (or `download(1)` etc. on subsequent attempts) in the user's `Downloads` folder.
@@ -314,15 +369,13 @@ In this case, Edge, has created an empty file `test-folder` (or `test-folder(1)`
 Download Files Resulting from Visiting Website Folder (<a href="../images/cloudfront-append-index-edge-4.png">see full-size image</a>)
 </p>**
 
-The Lambda function does not seem to be betting executed as a CloudFront trigger because viewing the console messages
-are not printing the `Old URI:` and `New URI:` console messages in the Lambda function.
-Question:  The 
+In this case, the Lambda function is either not getting executed as a CloudFront trigger,
+or a download is attempted instead of view.
+This issue was resolved by using the Lambda function code shown in this Example 1 and the following Example 2.
 
-### Attempt 2 - Works ###
+#### Example 2 for S3 Static Public Website ####
 
-The previous attempt (above) had issues, possible because a Lambda function was implemented
-for authentication and a separate function was used to add `index.html` to folders.
-Instead of automatically adding `index.html` to URLs ending in `/` empty files were downloaded.
+The previous Example 1 initially had issues and this second example was implemented as a test.  It worked.
 
 The following attempt implements a CloudFront distribution for the `learn.openwaterfoundation.org` S3 bucket public static website,
 and therefore no authentication to deal with.
