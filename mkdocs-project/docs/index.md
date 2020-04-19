@@ -3,6 +3,7 @@
 This documentation provides resources to learn how to use Amazon Web Services (AWS).
 
 This documentation has been written based on experience using AWS at the Open Water Foundation.
+It is hoped that this documentation can benefit our staff, clients, collaborators, and the public.
 
 ## About the Open Water Foundation ##
 
@@ -15,7 +16,7 @@ See also other [OWF learning resources](http://learn.openwaterfoundation.org).
 
 ## How to Use this Documentation ##
 
-The documentation is organized in order of information and tasks necessary to use AWS.
+The documentation is organized in according to major service types.
 
 This documentation is not intended to be a full reference for AWS but focuses on topics that
 will help understand important technical concepts and be successful with AWS.
@@ -27,7 +28,7 @@ Navigation menus may be collapsed if viewing on a small screen or window.
 
 ## License ##
 
-The OWF Learn AWS website content and examples are licenses under the
+The OWF Learn AWS website content and examples are licensed under the
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0).
 
 ## Source Repository on GitHub ##

@@ -6,16 +6,24 @@ site_name: Learn / AWS
 nav:
 - Home: index.md
 - Overview: overview.md
-- 'AWS Account':  aws-account/aws-account.md
-- 'AWS Login':  aws-login/aws-login.md
-- 'AWS Command Line: CLI':  cli/cli.md
-- 'Users and Roles: IAM': iam/iam.md
-- 'Storage: S3': s3/s3.md
-- 'Content Delivery:':
-  - 'CloudFront': cloudfront/cloudfront.md
-  - 'CloudFront + Lambda Function':  cloudfront/auth-lambda.md
-- 'Computing: EC2': ec2/ec2.md
-- 'Troubleshooting': troubleshooting/troubleshooting.md
+- 'AWS Account':  'account/account.md'
+- 'AWS Login':  'login/login.md'
+- 'AWS Command Line: CLI':  'cli/cli.md'
+- 'Users and Roles':
+  - 'Overview': 'users/overview.md'
+  - 'IAM': 'users/iam/iam.md'
+- 'Storage':
+  - 'Overview': 'storage/overview.md'
+  - 'S3': 'storage/s3/s3.md'
+- 'Content Delivery Network':
+  - 'Overview': 'cdn/overview.md'
+  - 'CloudFront': 'cdn/cloudfront/cloudfront.md'
+  - 'CloudFront + S3 Static Website':  'cdn/cloudfront/public-s3-bucket.md'
+  - 'CloudFront + Lambda Function':  'cdn/cloudfront/private-auth-lambda.md'
+- 'Virtual Machine':
+  - 'Overview': 'vm/overview.md'
+  - 'EC2': 'vm/ec2/ec2.md'
+- 'Troubleshooting': 'troubleshooting/troubleshooting.md'
 - 'Resources': resources.md
 # ------- configuration properties ---------------
 copyright:  Copyright Open Water Foundation

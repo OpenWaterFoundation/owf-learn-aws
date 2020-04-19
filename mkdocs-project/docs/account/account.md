@@ -24,7 +24,7 @@ association of email account and phone number.
 For example the same phone number **cannot** be used with more than one AWS account.
 However, options such as mobile phone app are available to overcome this limitation (see the above link).
 
-The [AWS IAM service](../iam/iam.md) handles users and authentication.
+The [AWS IAM service](../users/iam/iam.md) handles users and authentication.
 
 ## Signing Up for an AWS Account ##
 
@@ -45,4 +45,4 @@ AWS Console Login (<a href="../images/aws-console-login.png">see full-size image
 
 See also:
 
-* [AWS Login](../aws-login/aws-login.md)
+* [AWS Login](../login/login.md)
