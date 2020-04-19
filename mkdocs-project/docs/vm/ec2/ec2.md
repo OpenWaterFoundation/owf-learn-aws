@@ -1,4 +1,4 @@
-# AWS / EC2 #
+# AWS / Virtual Machine / EC2 #
 
 This documentation provides information about AWS EC2 services, which can be used to create cloud virtual machines.
 

@@ -1,4 +1,4 @@
-# AWS / CloudFront / Authentication Using Lambda Function #
+# AWS / CDN / CloudFront / Authentication Using Lambda Function #
 
 This documentation explains how to use AWS CloudFront to create a private, authenticated
 content delivery network (CDN) using a Lambda function.
@@ -19,8 +19,8 @@ content delivery network (CDN) using a Lambda function.
 
 This documentation was prepared on 2020-04-09.
 
-This section describes how to to create a static website using CloudFront
-with authentication provided using a Lambda function.
+This section describes how to to create a static website using CloudFront and
+a private S3 bucket, with authentication provided using a Lambda function.
 The hierarchy of services is as follows:
 
 ```
@@ -331,7 +331,7 @@ CloudFront Distribution Example Settings
 | ***Viewer Protocol Policy*** | Yes | `HTTPS Only` | The point of this example is to add authentication for secure access, so only allow HTTPS.  Alternatively, can use ***Redirect HTTP to HTTPS*** to accommodate users that may try either protocols. |
 | ***Allowed HTTP Methods*** | ? | `GET, HEAD`| Use the default. Should be enough for read-only access, and can enable others if necessary, such if code depends on `OPTIONS`. |
 | ***Field Level Encryption Config*** | | | Use the default. Not sure what this is. |
-| ***Cached HTTP Methods*** | | `Get, Head (Cached by defult)` | Use the default. Cannot change here (maybe can change after initial setup). |
+| ***Cached HTTP Methods*** | | `Get, Head (Cached by default)` | Use the default. Cannot change here (maybe can change after initial setup). |
 | ***Cached Based on Selected Request Headers*** | | `None (Improves Caching)` | Use the default. |
 | ***Object Caching*** | | `Use Origin Cache Headers` | Use the default.  May need to change later if web content caching is problematic, but content can bust the cache itself. |
 | ***Minimum TTL*** | | `0` | Use the default.  May need to change if caching is problematic. |
@@ -360,8 +360,7 @@ CloudFront Distribution Example Settings
 
 Press the ***Create Distribution*** button.
 
-Then try the CloudFront ***Create Distribution*** again.
-The following error resulted:
+The following error results:
 
 ```
 com.amazonaws.services.cloudfront.model.InvalidViewerCertificateException: To add an alternate domain name (CNAME) to a CloudFront distribution, you must attach a trusted certificate that validates your authorization to use the domain name. For more details, see: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html#alternate-domain-names-requirements (Service: AmazonCloudFront; Status Code: 400; Error Code: InvalidViewerCertificate; Request ID: e380bacf-cc64-4f86-a463-ba215aec3534)
@@ -439,21 +438,21 @@ If the login is successful, the website `index.html` page should be shown.
 
 ## Step 6: Additional CloudFront Configuration ##
 
-Additional CloudFront configuration can be done.
-See [CloudFront Distribution Configuration](cloudfront.md#cloudfront-distribution-configuration).
+Additional CloudFront configuration may be required.  See:
+
+* [CloudFront Distribution Configuration](cloudfront.md#cloudfront-distribution-configuration)
+* [Additional CloudFront Website Configuration](cloudfront.md#additional-cloudfront-website-configuration)
 
 ## Step 7: Define CNAME DNS Record ##
 
 If custom domain will be used for URLs rather than CloudFront URLs, a CNAME DNS record must be defined.
 The CNAME domain is specified as the ***Alternate Domain Names (CNAMEs)*** setting when configuring the CloudFront distribution.
-Need to complete this section.
 
-Need to fill out this section.
+Need to complete this section.
 
 ## Step 8: Define SSL Certificate ##
 
-If custom domain will be used for URLs rather than CloudFront URLs, a SSL certificate must be created and uploaded.
+If `https` is used, a SSL certificate must be created and uploaded.
 The SSL certificate is specified using as the ***SSL Certificate*** setting when configuring the CloudFront distribution.
-Need to complete this section.
 
-Need to fill out this section.
+Need to complete this section.
