@@ -95,12 +95,12 @@ such as database servers.
 
 Amazon S3 can be used to implement a CDN, using the following options:
 
-* [AWS / Storage / Hosting a Public Static Website on S3](../storage/s3/s3.md#hosting-a-public-static-website-on-s3) - requires only S3
-* [AWS / Storage / Hosting a Private Static Website on S3](../storage/s3/s3.md#hosting-a-private-static-website-on-s3) - requires S3 and CloudFront
+* [Website / S3](../website/s3/s3.md) - requires only S3
 
 ## Implementing a CDN Using CloudFront ##
 
-AWS CloudFront is designed to implement a high-performing CDN.
+AWS CloudFront is designed to implement a high-performing CDN,
+with support for authentication, `https`, and replicated servers.
 See the following:
 
 * [AWS / CDN / CloudFront](cloudfront/cloudfront.md)
