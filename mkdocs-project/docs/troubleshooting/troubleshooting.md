@@ -48,3 +48,37 @@ See the following for more information:
 
 * [Why S3 website redirect location is not followed by CloudFront?](https://serverfault.com/questions/450940/why-s3-website-redirect-location-is-not-followed-by-cloudfront)
 * [AWS Forum: Redirect not Working](https://forums.aws.amazon.com/message.jspa?messageID=907824)
+
+=======
+
+## General AWS Help ##
+
+Resources that describe how to redirect to S3 subfolder using CloudFront. This is a fairly common
+issue, as a true hierarchy does not exist in S3 as it does in CloudFront. Therefore requesting
+subfolders when using CloudFront and S3 present problems, which as discussed in the links below.
+
+* https://stackoverflow.com/questions/49082709/redirect-to-index-html-for-s3-subfolder
+* https://serverfault.com/questions/450940/why-s3-website-redirect-location-is-not-followed-by-cloudfront
+* https://forums.aws.amazon.com/message.jspa?messageID=907824
+
+## Cache key and origin requests help ##
+
+This section presents to different radio buttons, **Cache policy and origin request policy (recommended)**,
+and **Legacy cache settings**, with the former being the default choice.
+
+The default choice should be the used. The main reason this section exists is to describe exactly
+what's going on here in case a future developer gets as confused as the writer of this section.
+The **Cache policy** and **Origin request policy - *optional***
+choices above are actually connected to the default choice, even though they look
+like they belong to **Legacy cache settings**. The following image shows the default choices,
+which are desired.
+
+**<p style="text-align: center;">
+![cloudfront-1](images/cloudfront-cache-key-default.png)
+</p>**
+
+This image displays the actual Legacy options, which is not desired.
+
+**<p style="text-align: center;">
+![cloudfront-1](images/cloudfront-cache-key-legacy.png)
+</p>**
