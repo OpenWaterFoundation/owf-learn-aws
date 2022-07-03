@@ -24,6 +24,10 @@ This allows any of the following variations of the URL to be requested:
 Implementing a solution allows folder-based URLs to be used rather than
 more explicit but uglier URLs that end in `index.html`.
 
+The following articles provide background on this issue:
+
+* [Stack Overflow: Redirect to index.html for S3 subfolder](https://stackoverflow.com/questions/49082709/redirect-to-index-html-for-s3-subfolder) - appending `index.html` to folder URLs
+
 ## Append `index.html` to URL
 
 A solution that has been demonstrated to work

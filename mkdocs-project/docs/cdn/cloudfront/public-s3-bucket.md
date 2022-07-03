@@ -41,6 +41,8 @@ Consequently, it will be possible to test functionality of the CloudFront websit
 
 ## Step 2: Create CloudFront Distribution ##
 
+This documentation was updated 2022-01-11.
+
 Access to CloudFront CDN websites are configured as "distributions".
 
 Use the AWS Console for CloudFront - open in a separate tab so that S3 and CloudFront console
@@ -87,7 +89,8 @@ CloudFront Distribution Example Settings
 | **Setting** | **Set** | **Setting Value**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | **Comments** |
 | -- | -- | -- | -- |
 | ========== | ===== | ======================== | **Origin Settings** |
-| ***Origin Domain Name*** | Yes | `learn.openwaterfoundation.`<br>`org.s3.amazonaws.com` | A list of available buckets and other sources for the AWS account will be provided.  In this case, pick the S3 bucket to use. |
+| ***Origin Domain*** | Yes | `learn.`<br>`openwaterfoundation.`<br>`org.s3.amazonaws.com` | A list of available buckets and other sources for the AWS account will be provided.  In this case, pick the S3 bucket to use. **Important:**  if redirects are used on the website, such as from top-level folder to a subfolder, use a domain that follows the pattern `bucket-name.s3-website-region.amazonaws.com`.  See the [Troubleshooting](../../troubleshooting/troubleshooting.md) for more information.  An example is the `poudre.openwaterfoundation.org.s3-website-us-west-2.amazonaws.com` domain used with the [poudre.openwaterfoundation.org](https://poudre.openwaterfoundation.org) website. |
+| ***Origin Name*** | Yes | This is the S3 website endpoint.  This will auto-populate when setting ***Origin Domain***. |
 | ***Origin Path*** | | | Use the default. Can leave this blank.  If the content originates from a bucket folder, specify the folder name here, with leading `/` but no trailing `/`. |
 | ***Origin ID*** | Yes | `s3-learn.`<br>`openwaterfoundation.org` | Use the default provided.  Enter a description for the origin.  An auto-generated value may be shown and is OK to use.  | 
 | ***Restrict Bucket Access*** | | `No` | Use the default.  Users will be able to access S3 URLs (such as static public website URLs) in addition to new CloudFront URLs. |
