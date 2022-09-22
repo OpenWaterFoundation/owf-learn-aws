@@ -43,6 +43,8 @@ Consequently, it will be possible to test functionality of the CloudFront websit
 
 ## Step 2: Create CloudFront Distribution ##
 
+This documentation was updated 2022-01-11.
+
 Access to CloudFront CDN websites are configured as "distributions".
 
 Use the AWS Console for CloudFront - open in a separate tab so that S3 and CloudFront console
@@ -78,6 +80,47 @@ value will be.
 CloudFront Distribution Example Settings
 </p>**
 
+| **Setting** | **Set** | **Setting Value**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | **Comments** |
+| -- | -- | -- | -- |
+| ========== | ===== | ======================== | **Origin Settings** |
+| ***Origin Domain*** | Yes | `learn.`<br>`openwaterfoundation.`<br>`org.s3.amazonaws.com` | A list of available buckets and other sources for the AWS account will be provided.  In this case, pick the S3 bucket to use. **Important:**  if redirects are used on the website, such as from top-level folder to a subfolder, use a domain that follows the pattern `bucket-name.s3-website-region.amazonaws.com`.  See the [Troubleshooting](../../troubleshooting/troubleshooting.md) for more information.  An example is the `poudre.openwaterfoundation.org.s3-website-us-west-2.amazonaws.com` domain used with the [poudre.openwaterfoundation.org](https://poudre.openwaterfoundation.org) website. |
+| ***Origin Name*** | Yes | This is the S3 website endpoint.  This will auto-populate when setting ***Origin Domain***. |
+| ***Origin Path*** | | | Use the default. Can leave this blank.  If the content originates from a bucket folder, specify the folder name here, with leading `/` but no trailing `/`. |
+| ***Origin ID*** | Yes | `s3-learn.`<br>`openwaterfoundation.org` | Use the default provided.  Enter a description for the origin.  An auto-generated value may be shown and is OK to use.  | 
+| ***Restrict Bucket Access*** | | `No` | Use the default.  Users will be able to access S3 URLs (such as static public website URLs) in addition to new CloudFront URLs. |
+| ***Origin Custom Headers*** | | | Use the default. Leave blank.  Custom headers might be useful for some websites. |
+| ========== | ===== | ======================== | **Default Cache Behavior Settings** |
+| ***Path Pattern*** | | `Default (*)` | Use the default. Can change after creating the distribution. |
+| ***Viewer Protocol Policy*** | | `Redirect HTTP` to `HTTPS` | Use the default. This will allow users to access the website using `http://` or `https://` at the front of URLs. |
+| ***Allowed HTTP Methods*** | ? | `GET, HEAD`| Use the default. Should be enough for read-only access, and can enable others if necessary, such if code depends on `OPTIONS`. |
+| ***Field Level Encryption Config*** | | | Use the default. Not sure what this is. |
+| ***Cached HTTP Methods*** | | `Get, Head (Cached by default)` | Use the default. Cannot change here (maybe can change after initial setup). |
+| ***Cached Based on Selected Request Headers*** | | `None (Improves Caching)` | Use the default. |
+| ***Object Caching*** | | `Use Origin Cache Headers` | Use the default.  May need to change later if web content caching is problematic, but content can bust the cache itself. |
+| ***Minimum TTL*** | | `0` | Use the default.  May need to change if caching is problematic. |
+| ***Maximum TTL*** | | `31536000` | Use the default.  May need to change if caching is problematic. |
+| ***Default TTL*** | | `86400` | Use the default.  May need to change if caching is problematic. |
+| ***Forward Cookies*** | | `None (Improves Caching)` | Use the default.  May need to change if caching is problematic. |
+| ***Query String Formatting and Caching*** | | `None (Improves Caching)` | Use the default.  May need to change if caching is problematic. |
+| ***Smooth Streaming*** | | `No` | Use the default.  May need to change if live event content is streamed. |
+| ***Restrict View Access (Use Signed URLs or Signed Cookies)*** | | `No` | Use the default.  A public website has no view restrictions. |
+| ***Compress Objects Automatically*** | ? | `No` | Use the default.  However, this may be a setting that is easy to change to improve performance.  See [Serving Compressed Files](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ServingCompressedFiles.html). |
+| ***Lambda Function Associations*** | | | Use the default - no Lambda function. |
+| ========== | ===== | ======================== | **Distribution Settings** |
+| ***Price Class*** | | `Use All Edge Locations (Best Performance)` | Use the default.  Alternate values can be chosen based on the likely users. |
+| ***AWS WAF Web ACL*** | | `None` | Use the default. |
+| ***Alternate Domain Names (CNAMEs)*** | ? | | Use default unless a ***SSL Certificate*** can be provided.  If used, specify the custom domain name that is configured in the organization's DNS (e.g., `owf-test.openwaterfoundation.org`). **However, this complicates SSL certificate configuration (see below).** |
+| ***SSL Certificate*** | ? | `Default CloudFront Certificate (*.cloudfront.net)` | Use the default.  This will allow using CloudFront URL to access the page.  If the CNAME custom domain is used, then need to create a custom SSL certificate in IAM or ACM (see Steps 7-8 below).  CloudFront URL's can be used even if CNAME is defined. |
+| ***Supported HTTP Versions*** | | `HTTP/2, HTTP/1.1, HTTP/1.0` | Use the default. |
+| ***Default Root Object*** | Yes | `index.html` | Specify `index.html`, which is the standard landing page HTML file. |
+| ***Logging*** | | `Off` | Use the default.  This can be turned on if interested in traffic. |
+| ***Bucket for Logs*** | | | Use the default.  If ***Logging*** is turned on, a bucket can be specified. |
+| ***Log Prefix*** | | | Use the default.  If ***Logging*** is turned on, a prefix can be specified. |
+| ***Cookie Logging*** | | | Use the default.  This appears to be disabled? |
+| ***Enable IPv6*** | | Selected | Use the default.  If signed URLs or signed cookes are used then need to follow additional instructions by following help link. |
+| ***Comment*** | Yes | `CloudFront using S3 bucket static public website.` | Enter a relevant comment to describe the distribution. |
+| ***Distribution State*** | | `Enabled`. | Use the default. The distribution can be disabled later if necessary. |
+=======
 | **Setting** | **Set** | **Setting Value** | **Comments** |
 | ---- | ---- | ---- | ---- |
 | ======== | ==== | ======================== | **Origin Settings** |
