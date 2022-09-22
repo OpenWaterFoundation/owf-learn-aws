@@ -1,7 +1,7 @@
 # owf-learn-aws #
 
-This repository contains the [Open Water Foundation (OWF)](http://openwaterfoundation.org/) Amazon Web Services (AWS) learning resources,
-which provides guidance for implementing AWS solutions.
+This repository contains the [Open Water Foundation (OWF)](http://openwaterfoundation.org/)
+Amazon Web Services (AWS) learning resources, which provides guidance for implementing AWS solutions.
 The documentation is written for the layperson in order to encourage effective use of AWS.
 
 See the deployed [OWF / Learn AWS](http://learn.openwaterfoundation.org/owf-learn-aws/) documentation.

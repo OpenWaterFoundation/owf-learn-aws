@@ -20,7 +20,9 @@ content delivery network (CDN).
 This documentation was prepared on 2022-01-20.
 
 This section describes how to to create a public static website using CloudFront
-and content provided by a public static website using an S3 bucket.
+and content provided by a public static website using an S3 bucket. Additionally,
+it describes how to set up CloudFront so that HTTPS is used by requesting a
+SSL Certificate.
 This example will use the S3 public static website URL and **not** the S3 bucket address.
 
 ```
@@ -67,6 +69,10 @@ CloudFront - Create Distribution (<a href="../images/cloudfront-create-distribut
 </p>**
 
 The following table lists configuration settings that were changed for this example.
+The `Set` column will be `Yes` if the user creating the distribution needs to add
+to the field or change the default value themselves. Otherwise, `No` indicates the
+user doesn't need to do anything. `Setting Value` will show what the field or choice
+value will be.
 
 **<p style="text-align: center;">
 CloudFront Distribution Example Settings
@@ -82,7 +88,10 @@ CloudFront Distribution Example Settings
 | **Connection attempts** | No | `3` | The number of times CloudFront attempts to connect to the origin. Use the default. |
 | **Connection timeout** | No | `10` | The number of seconds that CloudFront waits for a response from the origin. Use the default. |
 | ======== | ==== | ======================== | **Default cache behavior** |
+| **Path pattern** | No | `Default (*)` | The path pattern determines which requests apply to this cache behavior, based on the request’s URI path. |
 | **Compress objects automatically** | No | `Yes` | CloudFront can automatically compress certain files that it receives from the origin before delivering them to the viewer. Use the default. |
+| **Viewer protocol policy** | Yes | `Redirect HTTP to HTTPS` | Any URI path that begins with HTTPS will be redirected to HTTPS for this distribution. |
+| **Allowed HTTP methods** | No | `GET, HEAD` | Restricts HTTP methods to GET and HEAD only. |
 | **Restrict viewer access** | No | `No` | Viewers must use CloudFront signed URLs or signed cookies to access your content. |
 | ======== | ==== | ======================== | **Cache key and origin requests** |
 | **Cache policy and origin request policy (recommended)** | No |  | This is the default, and the two following dropdowns under `Legacy cache settings` are meant for creating each policy. It seems like they are part of the legacy radio button, when in fact they belong to the default cache policy choice. This is confusing, and more details are explained in the [Troubleshooting](../../troubleshooting/troubleshooting.md#cache-key-and-origin-requests-help) section. |
@@ -90,10 +99,18 @@ CloudFront Distribution Example Settings
 | **Origin request policy** | No |  | Default is none. |
 | **Response headers policy** | No |  | Optional, default is to not use. |
 | **Enable real-time logs** | No | `No` | Get information about the requests that your distribution receives, delivered within seconds of CloudFront receiving them. Use the default. |
+| ======== | ==== | ======================== | **Function associations** |
+| **Origin response** | Yes | **Function type**=`Lambda@Edge`, **Function ARN/Name**=`arn:aws:lambda:<region>:<user-info>:function:<function-name>:<function-version>` | Sets the provided Lambda function to be run as an Origin response to manipulate provided URIs. |
 | ======== | ==== | ======================== | **Settings** |
 | **Price class** | Yes | `Use only North America and Europe` | The price class associated with the maximum price paid. Default is `Use all edge locations (best performance)`. For the current domain, which is accessed in the U.S., worldwide speed is not necessary. |
+| **AWS WAF web ACL** | No |  | Default is empty. (May show an access error.) |
 | **Alternate domain name (CNAME)** | Yes | `learn.openwaterfoundation.org` | The custom domain names that used in URLs for the files served by this distribution. Test could be substituted with another subdomain if desired. **This can only be done after the custom SSL certificate has been requested and validated. Skip on distribution creation.** |
 | **Custom SSL certificate** | Yes | Domain name given to the certificate, e.g. `learn.openwaterfoundation.org` or `*.openwaterfoundation.org` | Refresh the certificate list, then choose it for the distribution. **This is done separately from the distribution creation. Click the Request Certificate link to begin. See the [Requesting a SSL Certificate](#requesting-a-ssl-certificate) section below for help.** |
+| **Supported HTTP versions** | No | `HTTP/2` | Use the default. |
+| **Default root object** | Yes | `index.html` | Use index.html if the landing page should show it. |
+| **Standard logging** | No | `Off` | TODO - Might be able to turn this on later with a S3 bucket used just for logging purposes. |
+| **IPv6** | No | `On` | Use the default. |
+| **Description** | Yes | `learn.openwaterfoundation.org` | Can use the alternative domain name to be displayed on the main distribution page to make it easier to discern which distribution is currently being viewed. |
 
 Press the ***Create Distribution*** button.
 
@@ -229,3 +246,6 @@ certificate.
 | **DNS validation - recommended** | No |  | Choose this if authorized to modify the DNS configuration for the domains in the certificate request. |
 | ======== | ==== | ======================== | **Tags** |
 | **Tag key**<br>**Tag value** | No |  | Manage different certificates by assigning metadata to each resource in the form of tags. This is optional, and user must have the correct permissions. |
+
+> NOTE: Public SSL/TLS certificates provisioned through AWS Certificate Manager are
+free. You pay only for the AWS resources you create to run your application.

@@ -19,9 +19,9 @@ checkMkdocsVersion() {
   # On Debian Linux, similar to Cygwin:  mkdocs, version 0.17.3
   mkdocsVersionFull=$(${mkdocsExe} --version)
   echo "MkDocs --version:  ${mkdocsVersionFull}"
-  mkdocsVersion=$(echo ${mkdocsVersionFull} | cut -d ' ' -f 3)
+  mkdocsVersion=$(echo "${mkdocsVersionFull}" | cut -d ' ' -f 3)
   echo "MkDocs full version number:  ${mkdocsVersion}"
-  mkdocsMajorVersion=$(echo ${mkdocsVersion} | cut -d '.' -f 1)
+  mkdocsMajorVersion=$(echo "${mkdocsVersion}" | cut -d '.' -f 1)
   echo "MkDocs major version number:  ${mkdocsMajorVersion}"
   if [ "${mkdocsMajorVersion}" -lt ${requiredMajorVersion} ]; then
     echo ""
@@ -37,12 +37,12 @@ checkMkdocsVersion() {
 # Determine the operating system that is running the script
 # - mainly care whether Cygwin or MINGW
 checkOperatingSystem() {
-  if [ ! -z "${operatingSystem}" ]; then
+  if [ -n "${operatingSystem}" ]; then
     # Have already checked operating system so return
     return
   fi
   operatingSystem="unknown"
-  os=$(uname | tr [a-z] [A-Z])
+  os=$(uname | tr '[:lower:]' '[:upper:]')
   case "${os}" in
     CYGWIN*)
       operatingSystem="cygwin"
@@ -90,7 +90,7 @@ invalidateCloudFront() {
   # - see:  https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html
   # - TODO smalers 2020-04-13 for some reason invalidating /index.html does not work, have to do "/index.html*"
   echo "Invalidating files so CloudFront will make new version available..."
-  ${awsExe} cloudfront create-invalidation --distribution-id ${cloudFrontDistributionId} --paths "${cloudFrontFolder}" --profile "${awsProfile}"
+  ${awsExe} cloudfront create-invalidation --distribution-id "${cloudFrontDistributionId}" --paths "${cloudFrontFolder}" --profile "${awsProfile}"
   errorCode=$?
 
   return ${errorCode}
@@ -110,9 +110,9 @@ setAwsExe() {
         # Path will be something like:  C:\Users\sam\AppData\Local\Programs\Python\Python37\python.exe
         # - so strip off the exe and substitute Scripts
         # - convert the path to posix first
-        pythonExePathPosix="/$(echo ${pythonExePath} | sed 's/\\/\//g' | sed 's/://')"
-        pythonScriptsFolder="$(dirname ${pythonExePathPosix})/Scripts"
-        echo ${pythonScriptsFolder}
+        pythonExePathPosix="/$(echo "${pythonExePath}" | sed 's/\\/\//g' | sed 's/://')"
+        pythonScriptsFolder="$(dirname "${pythonExePathPosix}")/Scripts"
+        echo "${pythonScriptsFolder}"
         awsExe="${pythonScriptsFolder}/aws"
       else
         echo "ERROR: Unable to find Python installation location to find 'aws' script"
@@ -130,7 +130,7 @@ setAwsExe() {
 # - sets the global ${mkdocsExe} variable
 # - return 0 if the executable is found, exit with 1 if not
 setMkDocsExe() {
-  if [ "${operatingSystem}" = "cygwin" -o "${operatingSystem}" = "linux" ]; then
+  if [ "${operatingSystem}" = "cygwin" ] || [ "${operatingSystem}" = "linux" ]; then
     # Is usually in the PATH.
     mkdocsExe="mkdocs"
     if hash py 2>/dev/null; then
@@ -176,9 +176,9 @@ checkMkdocsVersion
 checkSourceDocs
 
 # Get the folder where this script is located since it may have been run from any folder
-scriptFolder=$(cd $(dirname "$0") && pwd)
+scriptFolder=$(cd "$(dirname "$0")" && pwd)
 # Change to the folder where the script is since other actions below are relative to that
-cd ${scriptFolder}
+cd "${scriptFolder}" || exit
 
 # Set --dryrun to test before actually doing
 dryrun=""
@@ -200,11 +200,11 @@ awsProfile="$1"
 # First build the site so that the "site" folder contains current content.
 # - "mkdocs serve" does not do this
 
-cd ../mkdocs-project
+cd ../mkdocs-project || exit
 
 ${mkdocsExe} build --clean
 
-cd ../build-util
+cd ../build-util || exit
 
 # Now sync the local files up to Amazon S3
 ${awsExe} s3 sync ../mkdocs-project/site ${s3Folder} ${dryrun} --delete --profile "${awsProfile}"
