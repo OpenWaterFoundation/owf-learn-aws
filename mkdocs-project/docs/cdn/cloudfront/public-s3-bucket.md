@@ -11,13 +11,14 @@ content delivery network (CDN).
 * [Step 5: Additional CloudFront Configuration](#step-5-additional-cloudfront-configuration)
 * [Step 6: Define CNAME DNS Record](#step-6-define-cname-dns-record)
 * [Step 7: Adding Certificate to Distribution](#adding-certificate-to-distribution)
-* [Requesting a SSL Certificate](#requesting-a-ssl-certificate)
+    + [Requesting a SSL Certificate](#requesting-a-ssl-certificate)
 
 ---------------
 
 ## Introduction ##
 
 This documentation was prepared on 2022-01-20.
+An [older version](public-s3-bucket-2020-04-19.md) of the documentation from 2020-04-19 has been archived.
 
 This section describes how to to create a public static website using CloudFront
 and content provided by a public static website using an S3 bucket. Additionally,
@@ -270,7 +271,7 @@ verified and validated certificate. Add it, and save the distribution.
 Allow 5-10 minutes for the new CloudFront distribution to be deployed, and
 HTTPS (and HTTP to HTTPS redirection) should be enabled.
 
-## Requesting a SSL Certificate ##
+### Requesting a SSL Certificate ###
 
 From the **List Certificate** section on AWS Certificate Manager, click on the orange
 **Request** button in the top right.

@@ -28,6 +28,7 @@ nav:
 - 'Virtual Machine':
   - 'Overview': 'vm/overview.md'
   - 'EC2': 'vm/ec2/ec2.md'
+- 'TSTool Integration': 'tstool/tstool.md'
 - 'Troubleshooting':
   - 'General': 'troubleshooting/troubleshooting.md'
   - 'CORS': 'troubleshooting/cors.md'

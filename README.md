@@ -11,16 +11,17 @@ See the deployed [OWF / Learn AWS](http://learn.openwaterfoundation.org/owf-lear
 The repository contains the following:
 
 ```text
-.github/              Files specific to GitHub such as issue template.
-.gitattributes        Typical Git configuration file.
-.gitignore            Typical Git configuration file.
-README.md             This file.
-build-util/           Useful scripts to view, build, and deploy documentation.
-mkdocs-project/       Typical MkDocs project for this documentation.
-  mkdocs.yml          MkDocs configuration file for website.
-  docs/               Folder containing source Markdown and other files for website.
-  site/               Folder created by MkDocs containing the static website - ignored using .gitignore.
-z-local-notes/        Local notes that will not be committed to repo,
+owf-learn-aws/        Main repository folder for working files.
+  .github/            Files specific to GitHub such as issue template.
+  .gitattributes      Typical Git configuration file.
+  .gitignore          Typical Git configuration file.
+  README.md           This file.
+  build-util/         Useful scripts to view, build, and deploy documentation.
+  mkdocs-project/     Typical MkDocs project for this documentation.
+    mkdocs.yml        MkDocs configuration file for website.
+    docs/             Folder containing source Markdown and other files for website.
+    site/             Folder created by MkDocs containing the static website - ignored using .gitignore.
+  z-local-notes/      Local notes that will not be committed to repo,
                       useful to indicate local environment for Git for each developer.
 ```
 

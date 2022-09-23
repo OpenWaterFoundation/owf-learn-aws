@@ -448,11 +448,13 @@ Additional CloudFront configuration may be required.  See:
 If custom domain will be used for URLs rather than CloudFront URLs, a CNAME DNS record must be defined.
 The CNAME domain is specified as the ***Alternate Domain Names (CNAMEs)*** setting when configuring the CloudFront distribution.
 
-Need to complete this section.
+See the [CloudFront + S3 Static Website](../public-s3-bucket#step-6-define-cname-dns-record)
+documentation for information about defining a DNS record.
 
 ## Step 8: Define SSL Certificate ##
 
 If `https` is used, a SSL certificate must be created and uploaded.
 The SSL certificate is specified using as the ***SSL Certificate*** setting when configuring the CloudFront distribution.
 
-Need to complete this section.
+See the [CloudFront + S3 Static Website](../public-s3-bucket#requesting-a-ssl-certificate)
+documentation for information about creating a certificate.
