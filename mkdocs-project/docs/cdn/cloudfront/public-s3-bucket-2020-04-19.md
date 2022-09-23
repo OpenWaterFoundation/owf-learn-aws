@@ -3,6 +3,8 @@
 This documentation explains how to use AWS CloudFront and S3 to create a public static website
 content delivery network (CDN).
 
+**This is an old version created on 2020-04-19.  See the [latest documentation](public-s3-bucket.md).**
+
 * [Introduction](#introduction)
 * [Step 1: Create a Public Static Website using S3](#step-1-create-a-public-static-website-using-s3)
 * [Step 2: Create CloudFront Distribution](#step-2-create-cloudfront-distribution)
