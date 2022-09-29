@@ -30,7 +30,7 @@ checkMkdocsVersion() {
   if [ "${mkdocsMajorVersion}" -lt ${requiredMajorVersion} ]; then
     echo ""
     echo "MkDocs version for this documentation must be version ${requiredMajorVersion} or later."
-    echo "MkDocs mersion that is found is ${mkdocsMajorVersion}, from full version ${mkdocsVersion}."
+    echo "MkDocs version that is found is ${mkdocsMajorVersion}, from full version ${mkdocsVersion}."
     exit 1
   else
     echo ""
@@ -38,12 +38,11 @@ checkMkdocsVersion() {
   fi
 }
 
-# Determine the operating system that is running the script
+# Determine the operating system that is running the script:
 # - mainly care whether Cygwin or MINGW
-checkOperatingSystem()
-{
+checkOperatingSystem() {
   if [ ! -z "${operatingSystem}" ]; then
-    # Have already checked operating system so return
+    # Have already checked operating system so return.
     return
   fi
   operatingSystem="unknown"
@@ -61,11 +60,11 @@ checkOperatingSystem()
   esac
 }
 
-# Check the source files for issues
+# Check the source files for issues:
 # - the main issue is internal links need to use [](file.md), not [](file)
 checkSourceDocs() {
-  # Currently don't do anything but could check the above
-  # Need one line to not cause an error
+  # Currently don't do anything but could check the above.
+  # Need one line to not cause an error.
   :
 }
 
