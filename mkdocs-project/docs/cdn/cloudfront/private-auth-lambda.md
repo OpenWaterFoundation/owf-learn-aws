@@ -118,7 +118,7 @@ The ***Set*** column has "Yes" if a value is set to other than the default.
 | -- | -- | -- | -- |
 | ========== | ===== | ======================== | **Basic Information** |
 | ***Function Name*** | Yes | `owfTestAuthentication` | Specify a function name that follows Node.js conventions because Node.js is going to be used to implement the function.  Other languages can also be used. |
-| ***Runtime*** | | `Node.js 12.x` | Use the default.  This example used another Node.js example. |
+| ***Runtime*** | | `Node.js 16e.x` | Use the default.  This example used another Node.js example. |
 | ========== | ===== | ======================== | **Permissions** |
 | ***Execution Role*** | Yes | `Create a new role with basic Lambda permissions` | Creating a new role seems reasonable for this CloudFront authentication example, although an existing role can be used.  For example, if many Lambda functions are defined, a general role can be defined to run the functions. |
 

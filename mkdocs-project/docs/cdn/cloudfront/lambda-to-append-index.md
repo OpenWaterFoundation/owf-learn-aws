@@ -47,7 +47,7 @@ The Lambda function currently used in production at the Open Water Foundation
 (for example on `learn.openwaterfoundation.org`) as of 2022-09-29 can be found below.
 
 Note that attempting to use a CloudFront function or the answer to the Stack
-Overflow answer from above as the solution does not provide enough capabilities
+Overflow question from above as the solution does not provide enough capabilities
 and therefore a Lambda function is required. Keep in mind that these might be enough
 to solve other issues when dealing with non Single Page Applications.
 
@@ -349,8 +349,9 @@ A Lambda function must be defined in the ***N. Virginia*** region using the
 AWS Console for Lambda.  Click the ***Create function*** button.
 Use the ***Author from Scratch*** approach and define a function as follows.
 
-* the function name is `appendIndexToUrlFolder2` to different from previous function attempt
-* Node.js.12.x is used because that is the latest available
+* The function name is `CloudFrontUrlHandler_SPA_TopLevelWithVersions` to keep it
+as verbose as possible so its functionality can be determined at a glance.
+* Node.js.16.x is used because that is the latest available.
 * An existing execution role is used (the same as used for another example).
 
 **<p style="text-align: center;">
@@ -441,36 +442,14 @@ exports.handler = (event, context, callback) => {
 };
 ```
 
-Use the ***Save*** button to save the function code.  Then use ***+ Add trigger*** to add a CloudFront  trigger.
-Use information similar to the following information to configure the trigger.
-Note that the ***Distribution*** will auto-populate using the first distribution and it may be necessary to
-copy and past the correct distribution.  Otherwise, deploying the trigger may complain that the event
-type is already used by another distribution (if this is the case).
-It is not clear if ***Include body*** should be checked in some cases, but this example was successful without selecting.
-The following selects the ***CloudFront event*** as ***Origin request***.
-
-**<p style="text-align: center;">
-![cloudfront-append-index2-2](images/cloudfront-append-index2-2.png)
-</p>**
-
-**<p style="text-align: center;">
-Lambda Function CloudFront Trigger Configuration (<a href="../images/cloudfront-append-index2-2.png">see full-size image</a>)
-</p>**
-
-Press ***Deploy*** to deploy the trigger.
-The window may not automatically close so press ***X*** if necessary.
-The trigger will then be indicated in the Lambda function editor:
-
-**<p style="text-align: center;">
-![cloudfront-append-index2-3](images/cloudfront-append-index2-3.png)
-</p>**
-
-**<p style="text-align: center;">
-Lambda Function Trigger has been Created (<a href="../images/cloudfront-append-index2-3.png">see full-size image</a>)
-</p>**
-
-Repeat ***+ Add trigger*** but for event type ***Origin Response***.
-Again, make sure that the distribution identifier is correct because the form is auto-populated with the first available distribution.
+When the function contents are ready to be published, click the **Actions** dropdown
+on the upper right part of the page, then **Deploy to Lambda@Edge**.
+Note that the Distribution will auto-populate using the first distribution and it
+may be necessary to copy and paste the correct distribution. Otherwise, deploying
+the trigger may complain that the event type is already used by another distribution
+(if this is the case). It is not clear if Include body should be checked in some
+cases, but this example was successful without selecting. The following selects the
+CloudFront event as **Origin response**.
 
 **<p style="text-align: center;">
 ![cloudfront-append-index2-4](images/cloudfront-append-index2-4.png)
@@ -480,7 +459,7 @@ Again, make sure that the distribution identifier is correct because the form is
 Lambda Function CloudFront Second Trigger Configuration (<a href="../images/cloudfront-append-index2-4.png">see full-size image</a>)
 </p>**
 
-The following confirms that two triggers have been created (note the `(2)` in the ***CloudFront*** box):
+The following confirms that the trigger has been successfully created:
 
 **<p style="text-align: center;">
 ![cloudfront-append-index2-5](images/cloudfront-append-index2-5.png)
@@ -494,3 +473,7 @@ Attempting to access a CloudFront URL, for example `https://d19yzyd6ao34tq.cloud
 links on this page that refer to its folders now works correctly,
 without attempting to download empty files when URLs ending in `/` are encountered,
 and the web browser shows the URL as requested (addition of `index.html` is done behind the scenes).
+
+Similarly, attempting to access a Single Page Application such as an Angular project
+using a versioned folder such as `https://infomapper.openwaterfoundation.org/1.4.0` correctly
+appends the necessary string to the URL so the home page is shown.
