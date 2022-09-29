@@ -19,12 +19,12 @@ nav:
   - 'Overview': 'website/overview.md'
   - 'S3 Public Static Website': 'website/s3/s3.md'
   - 'Redirect an S3 URL': 'website/s3/redirect.md'
-  - 'Append index.html to URL': 'website/cloudfront/append-index.md'
 - 'Content Delivery Network':
   - 'Overview': 'cdn/overview.md'
   - 'CloudFront': 'cdn/cloudfront/cloudfront.md'
   - 'CloudFront + S3 Static Website':  'cdn/cloudfront/public-s3-bucket.md'
   - 'CloudFront + Lambda Authentication':  'cdn/cloudfront/private-auth-lambda.md'
+  - 'Lambda Function for index.html':  'cdn/cloudfront/lambda-to-append-index.md'
 - 'Virtual Machine':
   - 'Overview': 'vm/overview.md'
   - 'EC2': 'vm/ec2/ec2.md'

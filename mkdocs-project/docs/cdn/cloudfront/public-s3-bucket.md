@@ -12,6 +12,7 @@ content delivery network (CDN).
 * [Step 6: Define CNAME DNS Record](#step-6-define-cname-dns-record)
 * [Step 7: Adding Certificate to Distribution](#adding-certificate-to-distribution)
     + [Requesting a SSL Certificate](#requesting-a-ssl-certificate)
+* [Step 8: Set `index.html` as the Default for all Folders](#step-8-set-indexhtml-as-the-default-for-all-folders)
 
 ---------------
 
@@ -247,7 +248,7 @@ CNAME `Host Record`, and the value will be used as the `Points To` field on Blue
 | **CNAME** |  |
 | ---- | ---- |
 | **Host Record** | **Points To** | **TTL** |
-| _345334e3f4aaf30 | _5323345e32a4689f765a76.alsdfxv.acm-validations.aws |
+| `_345334e3f4aaf30` | `_5323345e32a4689f765a76.alsdfxv.acm-validations.aws` |
 
 The certificate should be validated after 5 minutes. Not sure how long it could
 take.
@@ -264,7 +265,7 @@ page on AWS Certificate Manager.
 Now that the certificate has be issued, back on the distribution General page,
 click `Edit`. The alternate domain
 name and custom SSL certificate can now be added. Enter in the alternate domain
-name (test.openwaterfoundation.org for example), then click the refresh
+name (`test.openwaterfoundation.org` for example), then click the refresh
 button next to the certificate field. Clicking the dropdown will show the one
 verified and validated certificate. Add it, and save the distribution.
 
@@ -273,11 +274,10 @@ HTTPS (and HTTP to HTTPS redirection) should be enabled.
 
 ### Requesting a SSL Certificate ###
 
-From the **List Certificate** section on AWS Certificate Manager, click on the orange
-**Request** button in the top right.
+From the ***List Certificate*** section on AWS Certificate Manager, click on the orange
+***Request*** button in the top right.
 
-* Confirm the `Request a public certificate` radio button is selected and click
-Next.
+* Confirm the `Request a public certificate` radio button is selected and click ***Next***.
 
 The following table describes the few choices when creating a request for a
 certificate.
@@ -291,5 +291,12 @@ certificate.
 | ======== | ==== | ======================== | **Tags** |
 | **Tag key**<br>**Tag value** | No |  | Manage different certificates by assigning metadata to each resource in the form of tags. This is optional, and user must have the correct permissions. |
 
-> NOTE: Public SSL/TLS certificates provisioned through AWS Certificate Manager are
-free. You pay only for the AWS resources you create to run your application.
+NOTE: Public SSL/TLS certificates provisioned through AWS Certificate Manager are free.
+You pay only for the AWS resources you create to run your application.
+
+## Step 8: Set `index.html` as the Default for all Folders ##
+
+By default, CloudFront folder URLs will not automatically return the `index.html` file for the folder
+due to how S3 supplies files to CloudFront.
+
+See the [CloudFront Lambda Function to Append `index.html` to URL](lambda-to-append-index.md) documentation.
