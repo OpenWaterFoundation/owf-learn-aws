@@ -3,7 +3,7 @@
 * [Introduction](#introduction)
 * [Append `index.html` to URL using a Lambda Function](#append-indexhtml-to-url-using-a-lambda-function)
     + [Current Production Lambda Function](#current-production-lambda-function)
-* [Configuring the Lambda Function for the CloudFront Distribution](#configuring-the-lambda-function-for-the-cloudfront-distribution)
+* [Configuring the Lambda Function for a CloudFront Distribution](#configuring-the-lambda-function-for-a-cloudfront-distribution)
 
 --------------
 
@@ -12,8 +12,8 @@
 Many websites use a convention that
 if the URL is specified as a folder with or without a trailing `/`,
 an `index.html` file should be returned by default.
-The `index.html` file exists, but the goal is that `index.html`
-should not need to be explicitly included in the URL.
+The goal is that `index.html` should not need to be explicitly included in the URL,
+allowing for nicer-looking URLs.
 
 Implementing a website using S3+CloudFront requires implementing a solution
 to append `index.html` to folder URLs if not explicitly included in the URL.
@@ -23,7 +23,7 @@ This allows any of the following variations of the URL to be requested:
 * `https://domain/somefolder/`
 * `https://domain/somefolder/index.html`
 
-The fundamental issue is that S3 does not actually use the concept of folders
+The fundamental issue is that S3 does not manage its objects using folders
 and therefore does not know when a served resource is a folder.
 All S3 objects are identified with a "key" string, which happens to default to using `/`
 as a visual separator similar to folders, but folders do not exist.
@@ -31,6 +31,7 @@ as a visual separator similar to folders, but folders do not exist.
 The following articles provide background on this issue:
 
 * [Stack Overflow: Redirect to index.html for S3 subfolder](https://stackoverflow.com/questions/49082709/redirect-to-index-html-for-s3-subfolder) - appending `index.html` to folder URLs
+* [Using Lambda@Edge to handle Angular client-side routing with S3 and CloudFront](https://andrewlock.net/using-lambda-at-edge-to-handle-angular-client-side-routing-with-s3-and-cloudfront/)
 
 An old version of [this documentation from 2020-04-19](lambda-to-append-index-2020-04-19.md)
 has been archived and will be removed in the future.
@@ -39,14 +40,13 @@ has been archived and will be removed in the future.
 
 A solution that has been demonstrated to work
 involves defining an AWS Lambda function for the CloudFront distribution.
-The function modifies the requested URL and appends `index.html` if it is not already included in the URL.
+The function modifies the requested URL and appends `index.html` (or `/index.html`)
+if it is not already included in the URL.
 
-An example of an older version of the Lambda function can be found in the
-[CloudFront documentation](https://learn.openwaterfoundation.org/owf-learn-aws/cdn/cloudfront/cloudfront/#set-indexhtml-as-the-default-for-all-folders).
 The Lambda function currently used in production at the Open Water Foundation
 (for example on `learn.openwaterfoundation.org`) as of 2022-09-29 can be found below.
 
-Note that attempting to use a CloudFront function or the answer to the Stack
+Note that attempting to use a "CloudFront function" or the answer to the Stack
 Overflow question from above as the solution does not provide enough capabilities
 and therefore a Lambda function is required. Keep in mind that these might be enough
 to solve other issues when dealing with non Single Page Applications.
@@ -298,15 +298,16 @@ function httpGet(params) {
 }
 ```
 
-## Configuring the Lambda Function for the CloudFront Distribution
+## Configuring the Lambda Function for a CloudFront Distribution
 
-The main CloudFront configuration settings allows setting the ***Default Root Object*** to `index.html`.
+The main CloudFront configuration settings allow setting the ***Default Root Object*** to `index.html`.
 However, this setting does not apply to other folders.
 This is different from an S3 bucket that is configured as a public static website.
 If the CloudFront distribution ***Origin Domain Name*** setting points to an S3 public static website then this is not an issue.
 However, if the CloudFront distribution uses an S3 bucket directly,
 for example to create an authenticated private website,
-many URLs will not work as expected because `index.html` is not the global default file when URLs ending in `/` are requested,
+many URLs will not work as expected because `index.html` is not the global default file when URLs ending in `/`
+or the URL may be a folder without trailing `/`,
 and errors like the following will be shown.
 
 ```
@@ -332,27 +333,29 @@ The following URL patterns don't work:
 
 See the following solution, which involves defining a lambda function:
 
-* [Stack Overflow "Serve index file instead of download prompt"](https://stackoverflow.com/questions/54164128/serve-index-file-instead-of-download-prompt) - **this worked and is used for both examples below**
+* [Using Lambda@Edge to handle Angular client-side routing with S3 and CloudFront](https://andrewlock.net/using-lambda-at-edge-to-handle-angular-client-side-routing-with-s3-and-cloudfront/) - **this worked as the basis of the final solution**
+* [Stack Overflow "Serve index file instead of download prompt"](https://stackoverflow.com/questions/54164128/serve-index-file-instead-of-download-prompt) - **this worked and was used in an initial experiment, can be used if single page applications are not involved**
 * [Implementing Default Directory Indexes in Amazon S3-backed Amazon CloudFront Origins Using Lambada@Edge](https://aws.amazon.com/blogs/compute/implementing-default-directory-indexes-in-amazon-s3-backed-amazon-cloudfront-origins-using-lambdaedge/) - **this did not work, and resulted in download of empty files for folders ending in `/`** (for example Chrome created files named `download *` and Microsoft Edge created files named `test-folder *`)
 
 The solution defines a trigger on the CloudFront distribution
-to detect when a page is accessed with URL ending in `/`, and modifies the URL to append `index.html`.
+to detect when a page is accessed with URL ending in `/` or otherwise matches a folder,
+and modifies the URL to append `index.html`.
 
 #### Example for S3 Static Public Website ####
 
 The following implements a CloudFront distribution for the `learn.openwaterfoundation.org` S3 bucket public static website,
-and therefore no authentication to deal with.
-Note that this example uses the origin content of the S3 bucket, not the served static website.
-This is done on purpose to illustrate how to resolve the issue with `index.html` not being the default file in a folder when using CloudFront.
+which is a public site with no authentication.
 
-A Lambda function must be defined in the ***N. Virginia*** region using the
-AWS Console for Lambda.  Click the ***Create function*** button.
+A Lambda function must be defined in the ***N. Virginia*** region using the AWS Console for Lambda.
+Click the ***Create function*** button.
 Use the ***Author from Scratch*** approach and define a function as follows.
 
-* The function name is `CloudFrontUrlHandler_SPA_TopLevelWithVersions` to keep it
-as verbose as possible so its functionality can be determined at a glance.
-* Node.js.16.x is used because that is the latest available.
-* An existing execution role is used (the same as used for another example).
+* The function name CloudFrontUrlHandler_SPA_TopLevelWithVersions` 
+  is verbose so that its functionality can be determined at a glance.
+  In this case `SPA` is used because it is used with Angular single page applications
+  and `TopLevelWithVersions` indicates that it handles versioned folders.
+* `Node.js 16.x` is used because that is the latest available.
+* An existing execution role is used (the same as used for other configuration settings).
 
 **<p style="text-align: center;">
 ![cloudfront-append-index2-1](images/cloudfront-append-index2-1.png)
@@ -362,94 +365,20 @@ as verbose as possible so its functionality can be determined at a glance.
 Create Lambda Function to Append `index.html` to Folder (<a href="../images/cloudfront-append-index2-1.png">see full-size image</a>)
 </p>**
 
-Press ***Create function*** to create the function.  Use the code from:
+Press ***Create function*** to create the function.  Use the code editor and copy from:
 
-* [Stack Overflow "Serve index file instead of download prompt"](https://stackoverflow.com/questions/54164128/serve-index-file-instead-of-download-prompt)
+* [Current Production Lambda Function](#current-production-lambda-function) section above
+* or, if a simpler function is OK, see:
+  [Stack Overflow "Serve index file instead of download prompt"](https://stackoverflow.com/questions/54164128/serve-index-file-instead-of-download-prompt)
 
-```
-'use strict';
-
-// combination origin-request, origin-response trigger to emulate the S3
-// website hosting index document functionality, while using the REST
-// endpoint for the bucket
-
-// https://stackoverflow.com/a/54263794/1695906
-
-const INDEX_DOCUMENT = 'index.html'; // do not prepend a slash to this value
-
-const HTTP_REDIRECT_CODE = '302'; // or use 301 or another code if desired
-const HTTP_REDIRECT_MESSAGE = 'Found'; 
-
-exports.handler = (event, context, callback) => {
-    const cf = event.Records[0].cf;
-
-    if(cf.config.eventType === 'origin-request')
-    {
-        // if path ends with '/' then append INDEX_DOCUMENT before sending to S3
-        if(cf.request.uri.endsWith('/'))
-        {
-            cf.request.uri = cf.request.uri + INDEX_DOCUMENT;
-        }
-        // return control to CloudFront, to send request to S3, whether or not
-        // we modified it; if we did, the modified URI will be requested.
-        return callback(null, cf.request);
-    }
-    else if(cf.config.eventType === 'origin-response')
-    {
-        // is the response 403 or 404?  If not, we will return it unchanged.
-        if(cf.response.status.match(/^40[34]$/))
-        {
-            // it's an error.
-
-            // we're handling a response, but Lambda@Edge can still see the attributes of the request that generated this response; so, we
-            // check whether this is a page that should be redirected with a trailing slash appended.  If it doesn't look like an index
-            // document request, already, and it doesn't end in a slash, and doesn't look like a filename with an extension... we'll try that.
-
-            // This is essentially what the S3 web site endpoint does if you hit a nonexistent key, so that the browser requests
-            // the index with the correct relative path, except that S3 checks whether it will actually work.  We are using heuristics,
-            // rather than checking the bucket, but checking is an alternative.
-
-            if(!cf.request.uri.endsWith('/' + INDEX_DOCUMENT) && // not a failed request for an index document
-               !cf.request.uri.endsWith('/') && // unlikely, unless this code is modified to pass other things through on the request side
-               !cf.request.uri.match(/[^\/]+\.[^\/]+$/)) // doesn't look like a filename  with an extension
-            {
-                // add the original error to the response headers, for reference/troubleshooting
-                cf.response.headers['x-redirect-reason'] = [{ key: 'X-Redirect-Reason', value: cf.response.status + ' ' + cf.response.statusDescription }];
-                // set the redirect code
-                cf.response.status = HTTP_REDIRECT_CODE;
-                cf.response.statusDescription = HTTP_REDIRECT_MESSAGE;
-                // set the Location header with the modified URI
-                // just append the '/', not the "index.html" -- the next request will trigger
-                // this function again, and it will be added without appearing in the
-                // browser's address bar.
-                cf.response.headers['location'] = [{ key: 'Location', value: cf.request.uri + '/' }];
-                // not strictly necessary, since browsers don't display it, but remove the response body with the S3 error XML in it
-                cf.response.body = '';
-            }
-        }
-
-        // return control to CloudFront, with either the original response, or
-        // the modified response, if we modified it.
-
-        return callback(null, cf.response);
-
-    }
-    else // this is not intended as a viewer-side trigger.  Throw an exception, visible only in the Lambda CloudWatch logs and a 502 to the browser.
-    {
-        return callback(`Lambda function is incorrectly configured; triggered on '${cf.config.eventType}' but expected 'origin-request' or 'origin-response'`);
-    }
-
-};
-```
-
-When the function contents are ready to be published, click the **Actions** dropdown
-on the upper right part of the page, then **Deploy to Lambda@Edge**.
+When the function contents are ready to be published, click the ***Actions*** dropdown
+on the upper right part of the page, then ***Deploy to Lambda@Edge***.
 Note that the Distribution will auto-populate using the first distribution and it
 may be necessary to copy and paste the correct distribution. Otherwise, deploying
 the trigger may complain that the event type is already used by another distribution
 (if this is the case). It is not clear if Include body should be checked in some
 cases, but this example was successful without selecting. The following selects the
-CloudFront event as **Origin response**.
+***CloudFront event*** as `Origin response`.
 
 **<p style="text-align: center;">
 ![cloudfront-append-index2-4](images/cloudfront-append-index2-4.png)
@@ -459,6 +388,7 @@ CloudFront event as **Origin response**.
 Lambda Function CloudFront Second Trigger Configuration (<a href="../images/cloudfront-append-index2-4.png">see full-size image</a>)
 </p>**
 
+Press ***Deploy*** to deploy the function.
 The following confirms that the trigger has been successfully created:
 
 **<p style="text-align: center;">
@@ -476,4 +406,4 @@ and the web browser shows the URL as requested (addition of `index.html` is done
 
 Similarly, attempting to access a Single Page Application such as an Angular project
 using a versioned folder such as `https://infomapper.openwaterfoundation.org/1.4.0` correctly
-appends the necessary string to the URL so the home page is shown.
+appends the necessary string to the URL so the application home page for the specific version is shown.

@@ -38,11 +38,11 @@ If the content is a web application such as an Angular application, the applicat
 To troubleshoot, check the following:
 
 1. Confirm that the ***Origin Domain*** property for the CloudFront distribution includes the longer `website` URL,
-for example `poudre.openwaterfoundation.org.s3-website-us-west-2.amazonaws.com`.
-Note the `website` in this URL, which uses the longer resource name.
-See the articles below for more information.
+   for example `poudre.openwaterfoundation.org.s3-website-us-west-2.amazonaws.com`.
+   Note the `website` in this URL, which uses the longer resource name.
+   See the articles below for more information.
 2. If the S3 bucket uses folders for versions of the web application, define a redirect.  [See documentation](../website/s3/redirect.md).
-3. Define a Lambda function to append `index.html` for folder-based URLs.  [See documentation](../website/cloudfront/append-index.md).
+3. Define a Lambda function to append `index.html` for folder-based URLs.  [See documentation](../cdn/cloudfront/lambda-to-append-index.md).
 
 See the following for more information:
 
