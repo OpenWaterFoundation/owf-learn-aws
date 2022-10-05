@@ -66,6 +66,17 @@ checkSourceDocs() {
   :
 }
 
+# Get the CloudFront distribution ID from the bucket so the ID is not hard-coded.
+# The distribution ID is echoed and can be assigned to a variable.
+# The output is similar to the following (obfuscated here):
+# ITEMS   arn:aws:cloudfront::123456789000:distribution/ABCDEFGHIJKLMN    learn.openwaterfoundation.org   123456789abcde.cloudfront.net   True    HTTP2   ABCDEFGHIJKLMN  True    2022-01-05T23:29:28.127000+00:00        PriceClass_100  Deployed
+getCloudFrontDistribution() {
+  local cloudFrontDistributionId subdomain
+  subdomain="learn.openwaterfoundation.org"
+  cloudFrontDistributionId=$(${awsExe} cloudfront list-distributions --output text --profile "${awsProfile}" | grep ${subdomain} | grep "arn:" | awk '{print $2}' | cut -d ':' -f 6 | cut -d '/' -f 2)
+  echo ${cloudFrontDistributionId}
+}
+
 # Invalidate a CloudFront distribution for files:
 # - first parameter is the CloudFront distribution ID
 # - second parameter is the CloudFront folder.
@@ -92,7 +103,7 @@ invalidateCloudFront() {
   # - see:  https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html
   # - TODO smalers 2020-04-13 for some reason invalidating /index.html does not work, have to do "/index.html*"
   echo "Invalidating files so CloudFront will make new version available..."
-  ${awsExe} cloudfront create-invalidation --distribution-id "${cloudFrontDistributionId}" --paths "${cloudFrontFolder}" --profile "${awsProfile}"
+  ${awsExe} cloudfront create-invalidation --distribution-id "${cloudFrontDistributionId}" --paths "${cloudFrontFolder}" --output json --profile "${awsProfile}"
   errorCode=$?
 
   return ${errorCode}
@@ -176,7 +187,7 @@ checkOperatingSystem
 # - will exit if MkDocs is not found
 setMkDocsExe
 
-# Set the Python aws executable.
+# Set the AWS CLI executable.
 setAwsExe
 
 # Make sure the MkDocs version is OK.
@@ -218,9 +229,19 @@ cd ../build-util || exit
 
 # Now sync the local files up to Amazon S3.
 ${awsExe} s3 sync ../mkdocs-project/site ${s3Folder} ${dryrun} --delete --profile "${awsProfile}"
+awsStatus=$?
+
+if [ ${awsStatus} -ne 0 ]; then
+  echo "Error uploading files to AWS."
+  exit 1
+fi
 
 # Invalidate the CloudFront distribution.
-cloudFrontDistributionId="E1OLDBANEI7OML"
+cloudFrontDistributionId=$(getCloudFrontDistribution)
+if [ -z "${cloudFrontDistributionId}" ]; then
+  echo "Error getting the CloudFront distribution."
+  exit 1
+fi
 cloudFrontFolder="/owf-learn-aws/*"
 invalidateCloudFront ${cloudFrontDistributionId} ${cloudFrontFolder}
 
