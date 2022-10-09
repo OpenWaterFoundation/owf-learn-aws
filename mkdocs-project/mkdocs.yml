@@ -35,21 +35,21 @@ nav:
 - 'Resources': resources.md
 # ------- configuration properties ---------------
 copyright:  Copyright Open Water Foundation
-# Use extra CSS to customize styles, based on theme
+# Use extra CSS to customize styles, based on theme.
 extra_css:
   - 'css/extra-material-theme.css'
 # ------------------------------------------------
-# Google Analytics
 # - see:  https://squidfunk.github.io/mkdocs-material/getting-started/#google-analytics
-google_analytics:
- - 'UA-135465513-1'
- - auto
-# Don't indicate the repo because Edit will be shown on every page (don't want that in deployed mode)
+extra:
+  analytics:
+    provider: google
+    property: 'G-KJFMBY739T'
+# Don't indicate the repo because Edit will be shown on every page (don't want that in deployed mode):
 # - Also see edit_uri if repo_url is specified
 #repo_url:  https://github.com/OpenWaterFoundation/owf-learn-mkdocs
 site_description:  Open Water Foundation Learn AWS
 site_author:  Open Water Foundation
-# Use Material theme
+# Use Material theme:
 # - installation notes:  https://github.com/squidfunk/mkdocs-material
 theme:
  name: material
