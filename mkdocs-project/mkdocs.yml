@@ -12,6 +12,7 @@ nav:
 - 'Users and Roles':
   - 'Overview': 'users/overview.md'
   - 'IAM': 'users/iam/iam.md'
+  - 'Cognito': 'users/cognito/cognito.md'
 - 'Storage':
   - 'Overview': 'storage/overview.md'
   - 'S3': 'storage/s3/s3.md'
