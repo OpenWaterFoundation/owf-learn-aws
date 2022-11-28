@@ -224,4 +224,3 @@ that have permissions to call unauthenticated API operations.
 **<p style="text-align: center;">
 Cognito initial app-client (<a href="../images/initial-app-client.png">see full-size image</a>)
 </p>**
-
