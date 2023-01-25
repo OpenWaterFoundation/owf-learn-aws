@@ -19,15 +19,15 @@ checkMkdocsVersion() {
   # The following should work for any version after a comma.
   mkdocsVersionFull=$(${mkdocsExe} --version | sed -e 's/.*, \(version .*\)/\1/g' | cut -d ' ' -f 2)
   echo "MkDocs --version:  ${mkdocsVersionFull}"
-  mkdocsVersion=$(echo ${mkdocsVersionFull} | cut -d ' ' -f 3)
+  mkdocsVersion=$(echo "${mkdocsVersionFull}" | cut -d ' ' -f 3)
   if [ -z "${mkdocsVersion}" ]; then
     echo "Error getting MkDocs version.  Is it installed?"
     exit 1
   fi
   echo "MkDocs full version number:  ${mkdocsVersion}"
-  mkdocsMajorVersion=$(echo ${mkdocsVersion} | cut -d '.' -f 1)
+  mkdocsMajorVersion=$(echo "${mkdocsVersion}" | cut -d '.' -f 1)
   echo "MkDocs major version number:  ${mkdocsMajorVersion}"
-  if [ "${mkdocsMajorVersion}" -lt ${requiredMajorVersion} ]; then
+  if [ "${mkdocsMajorVersion}" -lt "${requiredMajorVersion}" ]; then
     echo ""
     echo "MkDocs version for this documentation must be version ${requiredMajorVersion} or later."
     echo "MkDocs version that is found is ${mkdocsMajorVersion}, from full version ${mkdocsVersion}."
@@ -41,12 +41,12 @@ checkMkdocsVersion() {
 # Determine the operating system that is running the script:
 # - mainly care whether Cygwin or MINGW
 checkOperatingSystem() {
-  if [ ! -z "${operatingSystem}" ]; then
+  if [ -n "${operatingSystem}" ]; then
     # Have already checked operating system so return.
     return
   fi
   operatingSystem="unknown"
-  os=`uname | tr [a-z] [A-Z]`
+  os=$(uname | tr "[:lower:]" "[:upper:]")
   case "${os}" in
     CYGWIN*)
       operatingSystem="cygwin"
@@ -72,9 +72,18 @@ checkSourceDocs() {
 # - sets the global ${mkdocsExe} variable
 # - return 0 if the executable is found, exit with 1 if not
 setMkDocsExe() {
-  if [ "${operatingSystem}" = "cygwin" -o "${operatingSystem}" = "linux" ]; then
+  if [ "${operatingSystem}" = "cygwin" ] || [ "${operatingSystem}" = "linux" ]; then
     # Is usually in the PATH.
     mkdocsExe="mkdocs"
+
+    mkdocs --version
+
+    # Check if the last command worked, and if not, try `py -m mkdocs --version`.
+    if [ "$?" = "1" ]; then
+      mkdocsExe="py -m mkdocs"
+      return 0
+    fi
+
     if hash py 2>/dev/null; then
       echo "mkdocs is not found (not in PATH)."
       exit 1
@@ -115,11 +124,11 @@ checkMkdocsVersion
 checkSourceDocs
 
 # Get the folder where this script is located since it may have been run from any folder.
-scriptFolder=$(cd $(dirname "$0") && pwd)
+scriptFolder=$(cd "$(dirname "$0")" && pwd)
 # Change to the folder where the script is since other actions below are relative to that.
-cd ${scriptFolder}
+cd "${scriptFolder}" || exit
 
-cd ../mkdocs-project
+cd ../mkdocs-project || exit
 
 port=8000
 echo "View the website using http://localhost:${port}"
