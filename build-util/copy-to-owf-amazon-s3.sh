@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 (set -o igncr) 2>/dev/null && set -o igncr; # This comment is required.
 # The above line ensures that the script can be run on Cygwin/Linux even with Windows CRNL.
 #
@@ -101,9 +101,15 @@ invalidateCloudFront() {
 
   # Invalidate for CloudFront so that new version will be displayed:
   # - see:  https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html
-  # - TODO smalers 2020-04-13 for some reason invalidating /index.html does not work, have to do "/index.html*"
+  # - TODO smalers 2020-04-13 for some reason invalidating /index.html does not work, have to do /index.html*
   echo "Invalidating files so CloudFront will make new version available..."
-  ${awsExe} cloudfront create-invalidation --distribution-id "${cloudFrontDistributionId}" --paths "${cloudFrontFolder}" --output json --profile "${awsProfile}"
+  if [ "${operatingSystem}" = "mingw" ]; then
+    # The following is needed to avoid MinGW mangling the paths, just in case a path without * is used:
+    # - tried to use a variable for the prefix but that did not work
+    MSYS_NO_PATHCONV=1 ${awsExe} cloudfront create-invalidation --distribution-id "${cloudFrontDistributionId}" --paths "${cloudFrontFolder}" --output json --profile "${awsProfile}"
+  else
+    ${awsExe} cloudfront create-invalidation --distribution-id "${cloudFrontDistributionId}" --paths "${cloudFrontFolder}" --output json --profile "${awsProfile}"
+  fi
   errorCode=$?
 
   return ${errorCode}
@@ -242,6 +248,7 @@ if [ -z "${cloudFrontDistributionId}" ]; then
   echo "Error getting the CloudFront distribution."
   exit 1
 fi
+# Use a wildcard to invalidate subfolders.
 cloudFrontFolder="/owf-learn-aws/*"
 invalidateCloudFront ${cloudFrontDistributionId} ${cloudFrontFolder}
 
