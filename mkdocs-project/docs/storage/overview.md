@@ -3,10 +3,8 @@
 This documentation provides an overview of
 cloud storage concepts and describes solutions for common requirements.
 
-* [Introduction](#introduction)
-	+ [Distributed Services](#distributed-services)
-	+ [Caching Content](#caching-content)
-* [Implementing Storage Using S3](#implementing-storage-using-s3)
+*   [Introduction](#introduction)
+*   [Implementing Storage Using AWS S3](#implementing-storage-using-aws-s3)
 
 ---------------
 
@@ -24,14 +22,14 @@ Other solutions provide specific functionality.
 
 AWS provides various cloud storage services:
 
-* [AWS Cloud Storage Products](https://aws.amazon.com/products/storage/)
+*   [AWS Cloud Storage Products](https://aws.amazon.com/products/storage/)
 
 Many cloud software solutions use AWS, Google, Microsoft, or other "service wholesaler" cloud storage services to
 provide specific cloud software solutions.
 
-## Implementing Storage Using S3 ##
+## Implementing Storage Using AWS S3 ##
 
-The Open Water Foundation uses S3 to store documentation, data, and host website content.
+The Open Water Foundation uses AWS S3 to store documentation, data, and host website content.
 See the following for more information about using S3 for cloud storage:
 
-* [AWS / Storage / S3](s3/s3.md)
+*   [AWS / Storage / S3](s3/s3.md)

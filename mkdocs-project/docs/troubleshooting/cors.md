@@ -2,8 +2,8 @@
 
 This documentation provides troubleshooting information for CORS (Cross-Origin Resource Sharing) issues.
 
-* [Background](#background)
-* [Troubleshooting CloudFront/S3 Example](#troubleshooting-cloudfronts3-example)
+*   [Background](#background)
+*   [Troubleshooting CloudFront/S3 Example](#troubleshooting-cloudfronts3-example)
 
 -------
 
@@ -17,7 +17,7 @@ Cross-origin requests for public APIs and content delivery networks should typic
 
 See the following information:
 
-* [Cross-origin resource sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) Wikipedia article.
+*   [Cross-origin resource sharing](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) Wikipedia article.
 
 ## Troubleshooting CloudFront/S3 Example ##
 
@@ -26,8 +26,8 @@ The following example illustrates a case where the [poudre.openwaterfoundation.o
 web application accesses data served from the [data.openwaterfoundation.org](https://data.openwaterfoundation.org) website.
 CORS applies even with sub-domains within a parent domain.
 
-* [How CloudFront delivers content](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFrontWorks.html) - background on CloudFront
-* [How do I resolve the "No 'Access-Control-Allow-Origin' header is present on the requested resource" error from CloudFront?](https://aws.amazon.com/premiumsupport/knowledge-center/no-access-control-allow-origin-error/)
+*   [How CloudFront delivers content](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/HowCloudFrontWorks.html) - background on CloudFront
+*   [How do I resolve the "No 'Access-Control-Allow-Origin' header is present on the requested resource" error from CloudFront?](https://aws.amazon.com/premiumsupport/knowledge-center/no-access-control-allow-origin-error/)
 
 The initial implementation resulted in the following error being shown in the Chrome web browser:
 
@@ -127,10 +127,10 @@ curl -H "Origin: openwaterfoundation.org" -v https://data.openwaterfoundation.or
 < x-amz-cf-id: KI6b0VTR7Jtp57oXHWxwUC69yXmhjulSECVuDBeSXPOkz0UNOyuEig==
 ```
 
-To diagnose why the application does not work on some computers, 
+To diagnose why the application does not work on some computers,
 an `OPTIONS` request was attempted on a working configuration.
 The request results in a `204 No Content` status,
-meaning that the server successfully fulfilled the request but there is no content in the response payload. 
+meaning that the server successfully fulfilled the request but there is no content in the response payload.
 This is appropriate for an `OPTIONS` request.
 Note that `Access-Control-Allow-Origin = *` is set in the response headers.
 
@@ -172,7 +172,7 @@ CloudFront Origin Request `CORS-With-Preflight` Policy (<a href="../images/cors-
 
 The following questions remain to be resolved the next time a CORS problem occurs:
 
-* Why did the application properly display the data on some computers before changing the CloudFront origin request configuration?
-* Why does the TSTool `WebGet` not return the `Access-Control-Allow-Origin` header for the `GET` request
-  or successfully run `OPTIONS` request?
-  The command line `curl` works OK for the `GET` request.
+*   Why did the application properly display the data on some computers before changing the CloudFront origin request configuration?
+*   Why does the TSTool `WebGet` not return the `Access-Control-Allow-Origin` header for the `GET` request
+    or successfully run `OPTIONS` request?
+    The command line `curl` works OK for the `GET` request.

@@ -3,17 +3,17 @@
 This documentation provides an overview of
 content delivery network (CDN) concepts and describes solutions for common requirements.
 
-* [Introduction](#introduction)
-	+ [Distributed Services](#distributed-services)
-	+ [Caching Content](#caching-content)
-* [Implementing a CDN Using S3](#implementing-a-cdn-using-s3)
-* [Implementing a CDN Using CloudFront](#implementing-a-cdn-using-cloudfront)
+*   [Introduction](#introduction)
+    +   [Distributed Services](#distributed-services)
+    +   [Caching Content](#caching-content)
+*   [Implementing a CDN Using S3](#implementing-a-cdn-using-s3)
+*   [Implementing a CDN Using CloudFront](#implementing-a-cdn-using-cloudfront)
 
 ---------------
 
 ## Introduction ##
 
-A content delivery network (CDN) is internet infrastructure and cloud services that 
+A content delivery network (CDN) is internet infrastructure and cloud services that
 provide access to web content.
 See [Content Delivery Network on Wikipedia](https://en.wikipedia.org/wiki/Content_delivery_network).
 
@@ -95,7 +95,7 @@ such as database servers.
 
 Amazon S3 can be used to implement a CDN, using the following options:
 
-* [Website / S3](../website/s3/s3.md) - requires only S3
+*   [Website / S3](../website/s3/s3.md) - requires only S3
 
 ## Implementing a CDN Using CloudFront ##
 
@@ -103,4 +103,4 @@ AWS CloudFront is designed to implement a high-performing CDN,
 with support for authentication, `https`, and replicated servers.
 See the following:
 
-* [AWS / CDN / CloudFront](cloudfront/cloudfront.md)
+*   [AWS / CDN / CloudFront](cloudfront/cloudfront.md)

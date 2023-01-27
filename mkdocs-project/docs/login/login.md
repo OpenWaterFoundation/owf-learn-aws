@@ -2,9 +2,9 @@
 
 This documentation provides information about logging into AWS.
 
-* [Introduction](#introduction)
-* [Login to AWS Console Web Application](#login-to-aws-console-web-application)
-* [CLI User Authentication](#cli-user-authentication)
+*   [Introduction](#introduction)
+*   [Login to AWS Console Web Application](#login-to-aws-console-web-application)
+*   [CLI User Authentication](#cli-user-authentication)
 
 ------------
 
@@ -12,15 +12,15 @@ This documentation provides information about logging into AWS.
 
 There are multiple reasons to login to to AWS services and different ways to authenticate as a user, including:
 
-* Logging into AWS Console root account, for example to change which services are being used, payment method, etc.
-**This approach should be used infrequently by a small number of people.**
-* Logging in to AWS Console to manage various services, either as an administrator or other type of user.
-This approach is common in order to use the AWS Console for ad hoc tasks and general management of services and resources.
-* Logging into cloud virtual machines such as [EC2](../vm/ec2/ec2.md),
-for example to perform system administrator or other tasks on the computer.
-This appproach is typical when an organization is supporting "heavy computing" on custom-configured virtual machines.
-* Logging in via command line interface ([CLI](../cli/cli.md)) for automated processing.
-This approach is common for tasks such uploading and downloading data files on [S3](../storage/s3/s3.md).
+*   Logging into AWS Console root account, for example to change which services are being used, payment method, etc.
+    **This approach should be used infrequently by a small number of people.**
+*   Logging in to AWS Console to manage various services, either as an administrator or other type of user.
+    This approach is common in order to use the AWS Console for ad hoc tasks and general management of services and resources.
+*   Logging into cloud virtual machines such as [EC2](../vm/ec2/ec2.md),
+    for example to perform system administrator or other tasks on the computer.
+    This appproach is typical when an organization is supporting "heavy computing" on custom-configured virtual machines.
+*   Logging in via command line interface ([CLI](../cli/cli.md)) for automated processing.
+    This approach is common for tasks such uploading and downloading data files on [S3](../storage/s3/s3.md).
 
 Additional information about specific cases is provided in the following sections.
 
@@ -28,7 +28,7 @@ Additional information about specific cases is provided in the following section
 
 Login to the AWS Console using the following link:
 
-* [AWS Console](https://aws.amazon.com/console/)
+*   [AWS Console](https://aws.amazon.com/console/)
 
 The webpage will be similar to the following:
 
@@ -60,7 +60,7 @@ This is the login that grants specific user permissions and should typically be 
 
 See also:
 
-* [How Users Sign in to Your Account](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_how-users-sign-in.html)
+*   [How Users Sign in to Your Account](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_how-users-sign-in.html)
 
 The login page also includes a link at the bottom to login as root, should that be necessary to perform administrative actions
 that cannot be accomplished as another user.
@@ -70,4 +70,4 @@ that cannot be accomplished as another user.
 The [AWS CLI (command line interface)](../cli/cli.md) software provides a command line interface to access specific AWS services.
 For example, CLI can be used to automate uploading files on the local computer to [S3](../storage/s3/s3.md) storage.
 
-* See the [CLI / User Authentication](../cli/cli.md#user-authentication) documentation
+*   See the [CLI / User Authentication](../cli/cli.md#user-authentication) documentation

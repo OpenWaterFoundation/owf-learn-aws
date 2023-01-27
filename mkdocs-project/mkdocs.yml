@@ -12,7 +12,6 @@ nav:
 - 'Users and Roles':
   - 'Overview': 'users/overview.md'
   - 'IAM': 'users/iam/iam.md'
-  - 'Cognito': 'users/cognito/cognito.md'
 - 'Storage':
   - 'Overview': 'storage/overview.md'
   - 'S3': 'storage/s3/s3.md'
@@ -29,6 +28,9 @@ nav:
 - 'Virtual Machine':
   - 'Overview': 'vm/overview.md'
   - 'EC2': 'vm/ec2/ec2.md'
+- 'AWS APIs and SDKs':
+  - 'Overview': 'api/overview.md'
+  - 'S3 Java SDK': 'api/s3-java/s3-java.md'
 - 'TSTool Integration': 'tstool/tstool.md'
 - 'Troubleshooting':
   - 'General': 'troubleshooting/troubleshooting.md'

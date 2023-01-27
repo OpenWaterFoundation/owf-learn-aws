@@ -2,8 +2,8 @@
 
 This documentation provides an overview of cloud virtual machines (VMs).
 
-* [Introduction](#introduction)
-* [Using EC2 for a Virtual Machine](#using-ec2-for-a-virtual-machine)
+*   [Introduction](#introduction)
+*   [Using EC2 for a Virtual Machine](#using-ec2-for-a-virtual-machine)
 
 ---------------
 
@@ -19,4 +19,4 @@ This documentation needs to be expanded.
 
 See:
 
-* [AWS / Virtual Machine / EC2](ec2/ec2.md)
+*   [AWS / Virtual Machine / EC2](ec2/ec2.md)
