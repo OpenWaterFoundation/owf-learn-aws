@@ -9,7 +9,7 @@ Another option is to use the Open Water Foundation TSTool AWS Plugin,
 which provides commands for TSTool software.
 See the following resources:
 
-* [TSTool downloads](https://opencdss.state.co.us/tstool/)
-* OWF TSTool AWS Plugin:
-    + [TSTool AWS Plugin documentation](https://software.openwaterfoundation.org/tstool-aws-plugin/latest/doc-user/)
-    + [TSTool AWS Plugin downloads](https://software.openwaterfoundation.org/tstool-aws-plugin/)
+*   [TSTool downloads](https://opencdss.state.co.us/tstool/)
+*   OWF TSTool AWS Plugin:
+    +   [TSTool AWS Plugin documentation](https://software.openwaterfoundation.org/tstool-aws-plugin/latest/doc-user/)
+    +   [TSTool AWS Plugin downloads](https://software.openwaterfoundation.org/tstool-aws-plugin/)

@@ -2,8 +2,8 @@
 
 This documentation provides information about AWS accounts.
 
-* [Introduction](#introduction)
-* [Signing Up for an AWS Account](#signing-up-for-an-aws-account)
+*   [Introduction](#introduction)
+*   [Signing Up for an AWS Account](#signing-up-for-an-aws-account)
 
 ------------
 
@@ -11,7 +11,7 @@ This documentation provides information about AWS accounts.
 
 An AWS account is necessary for an organization to use specific AWS services.
 
-The organization root account should be associated with an organization and provides access for billing and other administrative actions. 
+The organization root account should be associated with an organization and provides access for billing and other administrative actions.
 Other non-root users can be added to the account, for example staff that work for an organization.
 Similar to any computer, it is best to not perform normal tasks as the root user.
 Consequently users can be defined on the account and can be assigned roles and permissions that make sense.
@@ -30,7 +30,7 @@ The [AWS IAM service](../users/iam/iam.md) handles users and authentication.
 
 To use AWS for an organization, first sign up for an Amazon account.
 
-* [Create Account](https://aws.amazon.com/resources/create-account/)
+*   [Create Account](https://aws.amazon.com/resources/create-account/)
 
 The following illustrates the ***AWS Console*** website, which also provides a ***Create an AWS Account*** button (upper right)
 that can be used to create a new account.
@@ -45,4 +45,4 @@ AWS Console Login (<a href="../images/aws-console-login.png">see full-size image
 
 See also:
 
-* [AWS Login](../login/login.md)
+*   [AWS Login](../login/login.md)

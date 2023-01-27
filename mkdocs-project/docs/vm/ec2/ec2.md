@@ -2,7 +2,7 @@
 
 This documentation provides information about AWS EC2 services, which can be used to create cloud virtual machines.
 
-* [Introduction](#introduction)
+*   [Introduction](#introduction)
 
 ------------
 
@@ -12,4 +12,4 @@ Need to fill in documentation...
 
 See:
 
-* [Amazon EC2](https://aws.amazon.com/ec2/)
+*   [Amazon EC2](https://aws.amazon.com/ec2/)

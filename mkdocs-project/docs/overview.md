@@ -1,7 +1,7 @@
 # AWS / Overview
 
-* [Introduction](#introduction)
-* [Alternatives to AWS](#alternatives-to-aws)
+*   [Introduction](#introduction)
+*   [Alternatives to AWS](#alternatives-to-aws)
 
 -------------
 
@@ -22,5 +22,5 @@ It is also possible to mix and match cloud services, although a price is incurre
 Many services have cost based on the level of service used and therefore can scale as needed.
 Primary alternatives to AWS include:
 
-* [Google Cloud Platform](https://cloud.google.com/)
-* [Microsoft Azure](https://azure.microsoft.com/en-us/)
+*   [Google Cloud Platform](https://cloud.google.com/)
+*   [Microsoft Azure](https://azure.microsoft.com/en-us/)

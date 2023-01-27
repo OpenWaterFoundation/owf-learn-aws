@@ -2,16 +2,16 @@
 
 This documentation describes how to install and use the AWS command line interface (CLI).
 
-* [Introduction](#introduction)
-* [Install Python `awscli`](#install-python-awscli)
-    + [Install on Windows](#install-on-windows)
-    + [Install on Git Bash](#install-on-git-bash)
-    + [Install on Cygwin](#install-on-cygwin)
-* [User Authentication](#user-authentication)
-* [Run `aws`](#run-aws)
-    + [Run on Windows](#run-on-windows)
-    + [Run on Git Bash](#run-on-git-bash)
-    + [Run on Cygwin](#run-on-cygwin)
+*   [Introduction](#introduction)
+*   [Install Python `awscli`](#install-python-awscli)
+    +   [Install on Windows](#install-on-windows)
+    +   [Install on Git Bash](#install-on-git-bash)
+    +   [Install on Cygwin](#install-on-cygwin)
+*   [User Authentication](#user-authentication)
+*   [Run `aws`](#run-aws)
+    +   [Run on Windows](#run-on-windows)
+    +   [Run on Git Bash](#run-on-git-bash)
+    +   [Run on Cygwin](#run-on-cygwin)
 
 ------------
 
@@ -113,7 +113,7 @@ which aws
 ```
 
 If the program is found and can be run using `aws`, then the configuration is OK.
-However, if the program is not in the `PATH`, 
+However, if the program is not in the `PATH`,
 trying to run by specifying the full path may have issues because of the
 space in the `Program Files`.
 Running the program with a full path and escaping the space seems to work, as follows:
@@ -160,7 +160,7 @@ See the previous Git Bash section.
 
 The `aws` program must be configured to allow the user to access AWS.
 
-* See:  [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+*   See:  [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
 
 The above results in AWS configuration files being saved in the user's files in a `.aws` folder.
 A profile name will also have been selected.
