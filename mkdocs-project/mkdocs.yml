@@ -28,6 +28,11 @@ nav:
 - 'Virtual Machine':
   - 'Overview': 'vm/overview.md'
   - 'EC2': 'vm/ec2/ec2.md'
+- 'Billing and Cost Management':
+  - 'Overview': 'costs/overview.md'
+  - 'Cost Explorer': 'costs/cost-explorer/cost-explorer.md'
+  - 'Cost Allocation Tags': 'costs/tags/tags.md'
+- 'Resource Explorer': 'resource-explorer/resource-explorer.md'
 - 'AWS APIs and SDKs':
   - 'Overview': 'api/overview.md'
   - 'S3 Java SDK': 'api/s3-java/s3-java.md'

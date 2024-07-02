@@ -1,10 +1,10 @@
 # owf-learn-aws #
 
-This repository contains the [Open Water Foundation (OWF)](http://openwaterfoundation.org/)
+This repository contains the [Open Water Foundation (OWF)](https://openwaterfoundation.org/)
 Amazon Web Services (AWS) learning resources, which provides guidance for implementing AWS solutions.
 The documentation is written for the layperson in order to encourage effective use of AWS.
 
-See the deployed [OWF / Learn AWS](http://learn.openwaterfoundation.org/owf-learn-aws/) documentation.
+See the deployed [OWF / Learn AWS](https://learn.openwaterfoundation.org/owf-learn-aws/) documentation.
 
 ## Repository Contents ##
 
@@ -34,9 +34,9 @@ MkDocs, and Material MkDocs theme.  Python 3 has been used for development.
 
 If the development environment is properly configured, edit and view content as follows:
 
-1. Edit content in the `mkdocs-project/docs` folder and update `mkdocs-project/mkdocs.yml` as appropriate.
-2. Run the `build-util/run-mkdocs-serve-8000.sh` script in Git Bash, Cygwin, Linux, or equivalent.
-3. View content in a web browser using URL `http://localhost:8000`.
+1.  Edit content in the `mkdocs-project/docs` folder and update `mkdocs-project/mkdocs.yml` as appropriate.
+2.  Run the `build-util/run-mkdocs-serve-8000.sh` script in Git Bash, Cygwin, Linux, or equivalent.
+3.  View content in a web browser using URL `http://localhost:8000`.
 
 ## License ##
 
@@ -47,9 +47,9 @@ The OWF Learn AWS website content and examples are licensed under the
 
 Contribute to the documentation as follows:
 
-1. Use GitHub repository issues to report minor issues.
-2. Use GitHub pull requests.
+1.  Use GitHub repository issues to report minor issues.
+2.  Use GitHub pull requests.
 
 ## Maintainers ##
 
-This repository is maintained by the [Open Water Foundation](http://openwaterfoundation.org/).
+This repository is maintained by the [Open Water Foundation](https://openwaterfoundation.org/).

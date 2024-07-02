@@ -1,4 +1,4 @@
-# notes-local
+# z-local-notes #
 
 This folder contains notes for the local repository working files.
 **Files other than this `README.md` will not be committed to the repository.**
